@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: home-desk-back
+
+  datasource:
+    url: ${DB_URL}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: 8080
+
+home-desk:
+  jwt:
+    secret: ${JWT_KEY}
+    expiracion-ms: 3600000
+    refresh-expiracion-ms: 2592000000
+
+  pepper:
+    secret: ${PEPPER_SECRET}
