@@ -1,4 +1,4 @@
-package com.solairy.home_desk_back;
+package com.solairy.homedesk;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
