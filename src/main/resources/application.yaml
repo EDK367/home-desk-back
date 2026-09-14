@@ -27,6 +27,17 @@ home-desk:
     secret: ${JWT_KEY}
     expiracion-ms: 3600000
     refresh-expiracion-ms: 2592000000
+    cookie:
+      name: ${JWT_COOKIE_NAME}
+      path: ${JWT_COOKIE_PATH}
+      domain: ${JWT_COOKIE_DOMAIN}
+      secure: ${JWT_COOKIE_SECURE}
+      same-site: ${JWT_COOKIE_SAME_SITE}
+      http-only: ${JWT_COOKIE_HTTP_ONLY}
+
+  cors:
+    allowed-origins:
+      - ${HOME_DESK_FRONT}
 
   pepper:
     secret: ${PEPPER_SECRET}

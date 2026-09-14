@@ -77,12 +77,16 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponse refreshToken(RefreshTokenRequest request) {
-        if (!jwtService.isRefreshTokenValid(request.refreshToken())) {
+    public LoginResponse refreshToken(String refreshToken) {
+        if (refreshToken == null || refreshToken.isBlank()) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "Refresh token no proporcionado");
+        }
+
+        if (!jwtService.isRefreshTokenValid(refreshToken)) {
             throw new GlobalException(HttpStatus.UNAUTHORIZED, "Refresh token inválido o expirado");
         }
 
-        String hashedToken = hashToken(request.refreshToken());
+        String hashedToken = hashToken(refreshToken.trim());
         Session session = sessionRepository.findByTokenHash(hashedToken)
                 .orElseThrow(() -> new GlobalException(HttpStatus.UNAUTHORIZED, "Sesión no encontrada o token inválido"));
 
@@ -122,11 +126,11 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(LogoutRequest request, UUID authenticatedUserId) {
+    public void logout(String refreshToken, UUID authenticatedUserId) {
         OffsetDateTime now = OffsetDateTime.now();
 
-        if (request != null && request.refreshToken() != null && !request.refreshToken().isBlank()) {
-            String hashedToken = hashToken(request.refreshToken().trim());
+        if (refreshToken != null && !refreshToken.isBlank()) {
+            String hashedToken = hashToken(refreshToken.trim());
             Optional<Session> sessionOpt = sessionRepository.findByTokenHash(hashedToken);
             if (sessionOpt.isPresent()) {
                 Session session = sessionOpt.get();
