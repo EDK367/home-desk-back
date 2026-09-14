@@ -1,15 +1,14 @@
 package com.solairy.homedesk.auth.controller;
 
-import com.solairy.homedesk.auth.dto.LoginRequest;
-import com.solairy.homedesk.auth.dto.LoginResponse;
-import com.solairy.homedesk.auth.dto.LogoutRequest;
-import com.solairy.homedesk.auth.dto.RefreshTokenRequest;
-import com.solairy.homedesk.auth.dto.UserSummaryResponse;
+import com.solairy.homedesk.auth.dto.request.LoginRequest;
+import com.solairy.homedesk.auth.dto.response.LoginResponse;
+import com.solairy.homedesk.auth.dto.request.LogoutRequest;
+import com.solairy.homedesk.auth.dto.request.RefreshTokenRequest;
+import com.solairy.homedesk.auth.dto.response.UserSummaryResponse;
 import com.solairy.homedesk.auth.service.AuthCookieService;
 import com.solairy.homedesk.auth.service.AuthService;
 import com.solairy.homedesk.common.exception.GlobalException;
 import com.solairy.homedesk.common.response.ApiResponse;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

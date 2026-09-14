@@ -1,4 +1,4 @@
-package com.solairy.homedesk.auth.dto;
+package com.solairy.homedesk.auth.dto.response;
 
 public record LoginResponse(
         String accessToken,

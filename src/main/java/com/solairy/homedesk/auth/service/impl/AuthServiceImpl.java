@@ -1,8 +1,8 @@
 package com.solairy.homedesk.auth.service.impl;
 
-import com.solairy.homedesk.auth.dto.LoginRequest;
-import com.solairy.homedesk.auth.dto.LoginResponse;
-import com.solairy.homedesk.auth.dto.UserSummaryResponse;
+import com.solairy.homedesk.auth.dto.request.LoginRequest;
+import com.solairy.homedesk.auth.dto.response.LoginResponse;
+import com.solairy.homedesk.auth.dto.response.UserSummaryResponse;
 import com.solairy.homedesk.auth.mapper.AuthMapper;
 import com.solairy.homedesk.auth.model.Session;
 import com.solairy.homedesk.auth.model.User;

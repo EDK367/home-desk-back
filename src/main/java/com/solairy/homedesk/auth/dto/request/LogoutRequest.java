@@ -1,4 +1,4 @@
-package com.solairy.homedesk.auth.dto;
+package com.solairy.homedesk.auth.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -1,4 +1,4 @@
-package com.solairy.homedesk.auth.dto;
+package com.solairy.homedesk.auth.dto.response;
 
 import com.solairy.homedesk.enums.RoleName;
 

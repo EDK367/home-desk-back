@@ -1,4 +1,4 @@
-package com.solairy.homedesk.auth.dto;
+package com.solairy.homedesk.auth.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
