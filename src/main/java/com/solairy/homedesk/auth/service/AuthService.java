@@ -1,0 +1,169 @@
+package com.solairy.homedesk.auth.service;
+
+import com.solairy.homedesk.auth.dto.LoginRequest;
+import com.solairy.homedesk.auth.dto.LoginResponse;
+import com.solairy.homedesk.auth.dto.LogoutRequest;
+import com.solairy.homedesk.auth.dto.RefreshTokenRequest;
+import com.solairy.homedesk.auth.dto.UserSummaryResponse;
+import com.solairy.homedesk.auth.mapper.AuthMapper;
+import com.solairy.homedesk.auth.model.Session;
+import com.solairy.homedesk.auth.model.User;
+import com.solairy.homedesk.auth.repository.SessionRepository;
+import com.solairy.homedesk.auth.repository.UserRepository;
+import com.solairy.homedesk.common.exception.GlobalException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.OffsetDateTime;
+import java.util.HexFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+
+    private final UserRepository userRepository;
+    private final SessionRepository sessionRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthMapper authMapper;
+
+    @Transactional
+    public LoginResponse login(LoginRequest request) {
+
+        User user = userRepository.findByUsernameOrEmailIgnoreCase(request.usernameOrEmail())
+                .orElseThrow(() -> new GlobalException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
+        }
+
+        if (!Boolean.TRUE.equals(user.getIsActive())) {
+            throw new GlobalException(HttpStatus.FORBIDDEN, "La cuenta está desactivada. Por favor, contacte al administrador.");
+        }
+
+        String roleName = user.getRole().getName().name();
+        List<String> roles = List.of(roleName);
+
+        String accessToken = jwtService.generateToken(user, roles);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        OffsetDateTime now = OffsetDateTime.now();
+        Session session = new Session();
+        session.setUser(user);
+        session.setTokenHash(hashToken(refreshToken));
+        session.setCreatedAt(now);
+        session.setExpiresAt(now.plusSeconds(jwtService.getRefreshExpirationSeconds()));
+        session.setRevokedAt(null);
+        sessionRepository.save(session);
+
+        UserSummaryResponse userSummary = authMapper.toUserSummaryResponse(user);
+
+        return new LoginResponse(
+                accessToken,
+                refreshToken,
+                jwtService.getExpirationSeconds(),
+                jwtService.getRefreshExpirationSeconds(),
+                userSummary
+        );
+    }
+
+    @Transactional
+    public LoginResponse refreshToken(RefreshTokenRequest request) {
+        if (!jwtService.isRefreshTokenValid(request.refreshToken())) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "Refresh token inválido o expirado");
+        }
+
+        String hashedToken = hashToken(request.refreshToken());
+        Session session = sessionRepository.findByTokenHash(hashedToken)
+                .orElseThrow(() -> new GlobalException(HttpStatus.UNAUTHORIZED, "Sesión no encontrada o token inválido"));
+
+        if (session.getRevokedAt() != null) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "La sesión ha sido revocada");
+        }
+
+        if (session.getExpiresAt().isBefore(OffsetDateTime.now())) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "La sesión ha expirado");
+        }
+
+        User user = session.getUser();
+        if (!Boolean.TRUE.equals(user.getIsActive())) {
+            throw new GlobalException(HttpStatus.FORBIDDEN, "La cuenta está desactivada");
+        }
+
+        String roleName = user.getRole().getName().name();
+        List<String> roles = List.of(roleName);
+
+        String newAccessToken = jwtService.generateToken(user, roles);
+        String newRefreshToken = jwtService.generateRefreshToken(user);
+
+        OffsetDateTime now = OffsetDateTime.now();
+        session.setTokenHash(hashToken(newRefreshToken));
+        session.setExpiresAt(now.plusSeconds(jwtService.getRefreshExpirationSeconds()));
+        sessionRepository.save(session);
+
+        UserSummaryResponse userSummary = authMapper.toUserSummaryResponse(user);
+
+        return new LoginResponse(
+                newAccessToken,
+                newRefreshToken,
+                jwtService.getExpirationSeconds(),
+                jwtService.getRefreshExpirationSeconds(),
+                userSummary
+        );
+    }
+
+    @Transactional
+    public void logout(LogoutRequest request, UUID authenticatedUserId) {
+        OffsetDateTime now = OffsetDateTime.now();
+
+        if (request != null && request.refreshToken() != null && !request.refreshToken().isBlank()) {
+            String hashedToken = hashToken(request.refreshToken().trim());
+            Optional<Session> sessionOpt = sessionRepository.findByTokenHash(hashedToken);
+            if (sessionOpt.isPresent()) {
+                Session session = sessionOpt.get();
+                if (session.getRevokedAt() == null) {
+                    session.setRevokedAt(now);
+                    sessionRepository.save(session);
+                }
+                return;
+            }
+        }
+
+        if (authenticatedUserId != null) {
+            List<Session> activeSessions = sessionRepository.findByUserIdAndRevokedAtIsNull(authenticatedUserId);
+            for (Session s : activeSessions) {
+                s.setRevokedAt(now);
+            }
+            if (!activeSessions.isEmpty()) {
+                sessionRepository.saveAll(activeSessions);
+            }
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserSummaryResponse getCurrentUser(UUID userId) {
+        User user = userRepository.findByIdWithRole(userId)
+                .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        return authMapper.toUserSummaryResponse(user);
+    }
+
+    private String hashToken(String token) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(token.getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al generar hash de seguridad", e);
+        }
+    }
+}

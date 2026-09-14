@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.auth.model;
 
 import com.solairy.homedesk.enums.RoleName;
 import jakarta.persistence.*;
@@ -13,15 +13,15 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "roles", schema = "public", uniqueConstraints = {@UniqueConstraint(name = "roles_name_key",
-        columnNames = {"name"})})
+@Table(name = "roles", schema = "public", uniqueConstraints = {
+        @UniqueConstraint(name = "roles_name_key", columnNames = {"name"})
+})
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 30)
     @NotNull
     @Column(name = "name", nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
@@ -45,6 +45,4 @@ public class Role {
     @ColumnDefault("now()")
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
-
-
 }

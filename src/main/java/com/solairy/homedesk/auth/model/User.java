@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.auth.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -14,18 +14,14 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "users", schema = "public", indexes = {
-        @Index(name = "idx_users_username",
-                columnList = "username"),
-        @Index(name = "idx_users_email",
-                columnList = "email"),
-        @Index(name = "idx_users_role_id",
-                columnList = "role_id")}, uniqueConstraints = {
-        @UniqueConstraint(name = "users_employee_number_key",
-                columnNames = {"employee_number"}),
-        @UniqueConstraint(name = "users_username_key",
-                columnNames = {"username"}),
-        @UniqueConstraint(name = "users_email_key",
-                columnNames = {"email"})})
+        @Index(name = "idx_users_username", columnList = "username"),
+        @Index(name = "idx_users_email", columnList = "email"),
+        @Index(name = "idx_users_role_id", columnList = "role_id")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "users_employee_number_key", columnNames = {"employee_number"}),
+        @UniqueConstraint(name = "users_username_key", columnNames = {"username"}),
+        @UniqueConstraint(name = "users_email_key", columnNames = {"email"})
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,6 +71,4 @@ public class User {
     @ColumnDefault("now()")
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
-
-
 }
