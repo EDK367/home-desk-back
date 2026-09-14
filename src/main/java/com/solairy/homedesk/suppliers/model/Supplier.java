@@ -60,5 +60,4 @@ public class Supplier {
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 
-
 }
