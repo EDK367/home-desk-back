@@ -1,4 +1,4 @@
-package com.solairy.homedesk.config;
+package com.solairy.homedesk.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

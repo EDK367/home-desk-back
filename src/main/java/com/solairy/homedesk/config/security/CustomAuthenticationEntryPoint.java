@@ -1,4 +1,4 @@
-package com.solairy.homedesk.config;
+package com.solairy.homedesk.config.security;
 
 import com.solairy.homedesk.common.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.solairy.homedesk.config;
+package com.solairy.homedesk.config.security;
 
 import com.solairy.homedesk.auth.service.JwtService;
 import jakarta.servlet.FilterChain;

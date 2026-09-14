@@ -1,4 +1,4 @@
-package com.solairy.homedesk.config;
+package com.solairy.homedesk.config.web;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
