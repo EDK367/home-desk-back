@@ -1,5 +1,6 @@
 package com.solairy.homedesk.models;
 
+import com.solairy.homedesk.enums.UnitMeasureProduct;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -49,7 +50,8 @@ public class Product {
     @NotNull
     @ColumnDefault("'UNIT'")
     @Column(name = "unit_of_measure", nullable = false, length = 20)
-    private String unitOfMeasure;
+    @Enumerated(EnumType.STRING)
+    private UnitMeasureProduct unitOfMeasure;
 
     @NotNull
     @Column(name = "sale_price", nullable = false, precision = 12, scale = 2)

@@ -1,5 +1,6 @@
 package com.solairy.homedesk.models;
 
+import com.solairy.homedesk.enums.RoleName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,7 +24,8 @@ public class Role {
     @Size(max = 30)
     @NotNull
     @Column(name = "name", nullable = false, length = 30)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
 
     @Size(max = 150)
     @Column(name = "description", length = 150)
