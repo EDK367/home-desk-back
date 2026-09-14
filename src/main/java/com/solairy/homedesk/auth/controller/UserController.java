@@ -26,7 +26,7 @@ import java.util.UUID;
 @Tag(name = "Users", description = "Endpoints para la gestión de usuarios")
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMINISTRATION')")
@@ -35,7 +35,7 @@ public class UserController {
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(defaultValue = "false") boolean includeInactive
     ) {
-        PageResponse<UserResponse> response = userService.findAll(pageable, includeInactive);
+        PageResponse<UserResponse> response = service.findAll(pageable, includeInactive);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Usuarios obtenidos exitosamente",
@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponse>> create(
             @Valid @RequestBody UserRequest request
     ) {
-        UserResponse response = userService.create(request);
+        UserResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 HttpStatus.CREATED.value(),
                 "Usuario creado exitosamente",
@@ -62,7 +62,7 @@ public class UserController {
             @PathVariable UUID id,
             @Valid @RequestBody UserRequest request
     ) {
-        UserResponse response = userService.update(id, request);
+        UserResponse response = service.update(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Usuario actualizado exitosamente",
@@ -75,7 +75,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<Void>> delete(
             @PathVariable UUID id
     ) {
-        userService.delete(id);
+        service.delete(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Usuario desactivado exitosamente",
