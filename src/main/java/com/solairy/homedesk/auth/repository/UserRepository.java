@@ -25,5 +25,20 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @EntityGraph(attributePaths = {"role"})
     Page<User> findAll(Pageable pageable);
 
-}
+    // usaurios activos
+    @EntityGraph(attributePaths = {"role"})
+    Page<User> findAllByIsActiveTrue(Pageable pageable);
 
+    // verificar si el email ya exixte
+    boolean existsByEmail(String email);
+
+    // verificar el email ingresado ignorando el actual
+    boolean existsByEmailAndIdNot(String email, UUID id);
+
+    // si hay colision con el username (complicado)
+    boolean existsByUsername(String username);
+
+    // numero de empleado
+    @Query(value = "SELECT NEXTVAL('seq_employee_number')", nativeQuery = true)
+    Integer nextEmployeeNumber();
+}
