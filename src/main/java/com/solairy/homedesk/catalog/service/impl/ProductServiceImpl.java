@@ -36,44 +36,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
     private final InventoryRepository inventoryRepository;
     private final InventoryMovementRepository inventoryMovementRepository;
     private final UserRepository userRepository;
-    private final ProductMapper productMapper;
+    private final ProductMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
     public PageResponse<ProductResponse> findAll(Pageable pageable) {
-        Page<Product> page = productRepository.findAllByIsActive(true, pageable);
+        Page<Product> page = repository.findAllByIsActive(true, pageable);
         return toPageResponse(page);
     }
 
     @Override
     @Transactional(readOnly = true)
     public PageResponse<ProductResponse> findAllProductAdmin(Pageable pageable) {
-        Page<Product> page = productRepository.findAll(pageable);
+        Page<Product> page = repository.findAll(pageable);
         return toPageResponse(page);
     }
 
     @Override
     @Transactional(readOnly = true)
     public ProductResponse findById(Long id) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(product, stock);
+        return mapper.toProductResponse(product, stock);
     }
 
     @Override
     @Transactional(readOnly = true)
     public ProductStockResponse getStock(Long id) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         Inventory inventory = inventoryRepository.findByProductId(id)
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductResponse create(ProductRequest request) {
         String sku = request.sku().trim();
-        if (productRepository.existsBySku(sku)) {
+        if (repository.existsBySku(sku)) {
             throw new GlobalException(HttpStatus.CONFLICT, "Ya existe un producto con el SKU: " + sku);
         }
 
@@ -119,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCreatedAt(OffsetDateTime.now());
         product.setUpdatedAt(OffsetDateTime.now());
 
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Inventory inventory = new Inventory();
         inventory.setProduct(savedProduct);
@@ -127,13 +127,13 @@ public class ProductServiceImpl implements ProductService {
         inventory.setUpdatedAt(OffsetDateTime.now());
         inventoryRepository.save(inventory);
 
-        return productMapper.toProductResponse(savedProduct, 0);
+        return mapper.toProductResponse(savedProduct, 0);
     }
 
     @Override
     @Transactional
     public ProductResponse update(Long id, ProductRequest request) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -141,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         String sku = request.sku().trim();
-        if (productRepository.existsBySkuAndIdNot(sku, id)) {
+        if (repository.existsBySkuAndIdNot(sku, id)) {
             throw new GlobalException(HttpStatus.CONFLICT, "Ya existe un producto con el SKU: " + sku);
         }
 
@@ -173,19 +173,19 @@ public class ProductServiceImpl implements ProductService {
         }
 
         product.setUpdatedAt(OffsetDateTime.now());
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(savedProduct, stock);
+        return mapper.toProductResponse(savedProduct, stock);
     }
 
     @Override
     @Transactional
     public ProductResponse changeSalePrice(Long id, ChangeSalePriceRequest request) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -194,19 +194,19 @@ public class ProductServiceImpl implements ProductService {
 
         product.setSalePrice(request.salePrice());
         product.setUpdatedAt(OffsetDateTime.now());
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(savedProduct, stock);
+        return mapper.toProductResponse(savedProduct, stock);
     }
 
     @Override
     @Transactional
     public ProductResponse changeMinStock(Long id, ChangeMinStockRequest request) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -215,19 +215,19 @@ public class ProductServiceImpl implements ProductService {
 
         product.setMinStockLevel(request.minStockLevel());
         product.setUpdatedAt(OffsetDateTime.now());
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(savedProduct, stock);
+        return mapper.toProductResponse(savedProduct, stock);
     }
 
     @Override
     @Transactional
     public ProductResponse changeCategory(Long id, ChangeCategoryRequest request) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -243,19 +243,19 @@ public class ProductServiceImpl implements ProductService {
 
         product.setCategory(category);
         product.setUpdatedAt(OffsetDateTime.now());
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(savedProduct, stock);
+        return mapper.toProductResponse(savedProduct, stock);
     }
 
     @Override
     @Transactional
     public ProductResponse updateStatus(Long id, boolean active) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (product.getIsActive() == active) {
@@ -264,19 +264,19 @@ public class ProductServiceImpl implements ProductService {
 
         product.setIsActive(active);
         product.setUpdatedAt(OffsetDateTime.now());
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = repository.save(product);
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
 
-        return productMapper.toProductResponse(savedProduct, stock);
+        return mapper.toProductResponse(savedProduct, stock);
     }
 
     @Override
     @Transactional
     public ProductResponse adjustStock(Long id, ManualStockAdjustmentRequest request) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -319,13 +319,13 @@ public class ProductServiceImpl implements ProductService {
         movement.setCreatedAt(OffsetDateTime.now());
         inventoryMovementRepository.save(movement);
 
-        return productMapper.toProductResponse(product, newBalance);
+        return mapper.toProductResponse(product, newBalance);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        Product product = productRepository.findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Producto no encontrado con id: " + id));
 
         if (Boolean.FALSE.equals(product.getIsActive())) {
@@ -334,12 +334,12 @@ public class ProductServiceImpl implements ProductService {
 
         product.setIsActive(false);
         product.setUpdatedAt(OffsetDateTime.now());
-        productRepository.save(product);
+        repository.save(product);
     }
 
     private PageResponse<ProductResponse> toPageResponse(Page<Product> page) {
         if (page.isEmpty()) {
-            return PageResponse.from(page, p -> productMapper.toProductResponse(p, 0));
+            return PageResponse.from(page, p -> mapper.toProductResponse(p, 0));
         }
 
         List<Long> productIds = page.getContent().stream().map(Product::getId).toList();
@@ -347,7 +347,7 @@ public class ProductServiceImpl implements ProductService {
                 .stream()
                 .collect(Collectors.toMap(i -> i.getProduct().getId(), Inventory::getQuantityOnHand));
 
-        return PageResponse.from(page, p -> productMapper.toProductResponse(p, stockMap.getOrDefault(p.getId(), 0)));
+        return PageResponse.from(page, p -> mapper.toProductResponse(p, stockMap.getOrDefault(p.getId(), 0)));
     }
 
     private boolean callerIsAdmin() {

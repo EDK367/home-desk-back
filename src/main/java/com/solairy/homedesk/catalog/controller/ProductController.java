@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Products", description = "Endpoints para la gestión de productos")
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductService service;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMINISTRATION', 'PURCHASING', 'INVENTORY', 'SALES')")
@@ -32,7 +32,7 @@ public class ProductController {
             @ParameterObject
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        PageResponse<ProductResponse> response = productService.findAll(pageable);
+        PageResponse<ProductResponse> response = service.findAll(pageable);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Productos obtenidos exitosamente",
@@ -46,7 +46,7 @@ public class ProductController {
             @ParameterObject
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        PageResponse<ProductResponse> response = productService.findAllProductAdmin(pageable);
+        PageResponse<ProductResponse> response = service.findAllProductAdmin(pageable);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Productos obtenidos exitosamente",
@@ -57,7 +57,7 @@ public class ProductController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMINISTRATION', 'PURCHASING', 'INVENTORY', 'SALES')")
     public ResponseEntity<ApiResponse<ProductResponse>> findById(@PathVariable Long id) {
-        ProductResponse response = productService.findById(id);
+        ProductResponse response = service.findById(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Producto obtenido exitosamente",
@@ -68,7 +68,7 @@ public class ProductController {
     @GetMapping("/{id}/stock")
     @PreAuthorize("hasAnyRole('ADMINISTRATION', 'PURCHASING', 'INVENTORY', 'SALES')")
     public ResponseEntity<ApiResponse<ProductStockResponse>> getStock(@PathVariable Long id) {
-        ProductStockResponse response = productService.getStock(id);
+        ProductStockResponse response = service.getStock(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Stock obtenido exitosamente",
@@ -81,7 +81,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<ProductResponse>> create(
             @Valid @RequestBody ProductRequest request
     ) {
-        ProductResponse response = productService.create(request);
+        ProductResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 HttpStatus.CREATED.value(),
                 "Producto creado exitosamente",
@@ -95,7 +95,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ProductRequest request
     ) {
-        ProductResponse response = productService.update(id, request);
+        ProductResponse response = service.update(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Producto actualizado exitosamente",
@@ -109,7 +109,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ChangeSalePriceRequest request
     ) {
-        ProductResponse response = productService.changeSalePrice(id, request);
+        ProductResponse response = service.changeSalePrice(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Precio de venta actualizado exitosamente",
@@ -123,7 +123,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ChangeMinStockRequest request
     ) {
-        ProductResponse response = productService.changeMinStock(id, request);
+        ProductResponse response = service.changeMinStock(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Stock mínimo actualizado exitosamente",
@@ -137,7 +137,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ChangeCategoryRequest request
     ) {
-        ProductResponse response = productService.changeCategory(id, request);
+        ProductResponse response = service.changeCategory(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Categoría del producto actualizada exitosamente",
@@ -151,7 +151,7 @@ public class ProductController {
             @PathVariable Long id,
             @RequestParam boolean active
     ) {
-        ProductResponse response = productService.updateStatus(id, active);
+        ProductResponse response = service.updateStatus(id, active);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Estado del producto actualizado exitosamente",
@@ -165,7 +165,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ManualStockAdjustmentRequest request
     ) {
-        ProductResponse response = productService.adjustStock(id, request);
+        ProductResponse response = service.adjustStock(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Stock modificado manualmente exitosamente",
@@ -176,7 +176,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRATION')")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
-        productService.delete(id);
+        service.delete(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Producto desactivado exitosamente",

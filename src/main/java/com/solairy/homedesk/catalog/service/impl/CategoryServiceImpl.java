@@ -21,28 +21,28 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
+    private final CategoryRepository repository;
+    private final CategoryMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
     public PageResponse<CategoryResponse> findAll(Pageable pageable) {
-        Page<Category> page = categoryRepository.findAllByIsActive(true, pageable);
-        return PageResponse.from(page, categoryMapper::toCategoryResponse);
+        Page<Category> page = repository.findAllByIsActive(true, pageable);
+        return PageResponse.from(page, mapper::toCategoryResponse);
     }
 
     @Override
     @Transactional(readOnly = true)
     public PageResponse<CategoryResponse> findAllProductAdmin(Pageable pageable) {
-        Page<Category> page = categoryRepository.findAll(pageable);
-        return PageResponse.from(page, categoryMapper::toCategoryResponse);
+        Page<Category> page = repository.findAll(pageable);
+        return PageResponse.from(page, mapper::toCategoryResponse);
     }
 
     @Override
     @Transactional
     public CategoryResponse create(CategoryRequest request) {
         String name = request.name().trim();
-        if (categoryRepository.existsByName(name)) {
+        if (repository.existsByName(name)) {
             throw new GlobalException(HttpStatus.CONFLICT, "Ya existe una categoría con el nombre: " + name);
         }
 
@@ -53,14 +53,14 @@ public class CategoryServiceImpl implements CategoryService {
         category.setCreatedAt(OffsetDateTime.now());
         category.setUpdatedAt(OffsetDateTime.now());
 
-        Category saved = categoryRepository.save(category);
-        return categoryMapper.toCategoryResponse(saved);
+        Category saved = repository.save(category);
+        return mapper.toCategoryResponse(saved);
     }
 
     @Override
     @Transactional
     public CategoryResponse update(Long id, CategoryRequest request) {
-        Category category = categoryRepository.findById(id)
+        Category category = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Categoría no encontrada con id: " + id));
 
         if (Boolean.FALSE.equals(category.getIsActive())) {
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         String name = request.name().trim();
-        if (categoryRepository.existsByNameAndIdNot(name, id)) {
+        if (repository.existsByNameAndIdNot(name, id)) {
             throw new GlobalException(HttpStatus.CONFLICT, "Ya existe una categoría con el nombre: " + name);
         }
 
@@ -76,14 +76,14 @@ public class CategoryServiceImpl implements CategoryService {
         category.setDescription(request.description() != null ? request.description().trim() : null);
         category.setUpdatedAt(OffsetDateTime.now());
 
-        Category saved = categoryRepository.save(category);
-        return categoryMapper.toCategoryResponse(saved);
+        Category saved = repository.save(category);
+        return mapper.toCategoryResponse(saved);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        Category category = categoryRepository.findById(id)
+        Category category = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Categoría no encontrada con id: " + id));
 
         if (Boolean.FALSE.equals(category.getIsActive())) {
@@ -92,6 +92,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         category.setIsActive(false);
         category.setUpdatedAt(OffsetDateTime.now());
-        categoryRepository.save(category);
+        repository.save(category);
     }
 }

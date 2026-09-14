@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Categories", description = "Endpoints para la gestión de categorías")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryService service;
 
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<CategoryResponse>>> findAll(
             @ParameterObject
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        PageResponse<CategoryResponse> response = categoryService.findAll(pageable);
+        PageResponse<CategoryResponse> response = service.findAll(pageable);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Categorías obtenidas exitosamente",
@@ -44,7 +44,7 @@ public class CategoryController {
             @ParameterObject
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        PageResponse<CategoryResponse> response = categoryService.findAllProductAdmin(pageable);
+        PageResponse<CategoryResponse> response = service.findAllProductAdmin(pageable);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Categorías obtenidas exitosamente",
@@ -57,7 +57,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryResponse>> create(
             @Valid @RequestBody CategoryRequest request
     ) {
-        CategoryResponse response = categoryService.create(request);
+        CategoryResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 HttpStatus.CREATED.value(),
                 "Categoría creada exitosamente",
@@ -71,7 +71,7 @@ public class CategoryController {
             @PathVariable Long id,
             @Valid @RequestBody CategoryRequest request
     ) {
-        CategoryResponse response = categoryService.update(id, request);
+        CategoryResponse response = service.update(id, request);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Categoría actualizada exitosamente",
@@ -84,7 +84,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<Void>> delete(
             @PathVariable Long id
     ) {
-        categoryService.delete(id);
+        service.delete(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Categoría desactivada exitosamente",
