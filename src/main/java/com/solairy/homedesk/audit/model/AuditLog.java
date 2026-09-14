@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.audit.model;
 
 import com.solairy.homedesk.auth.model.User;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.purchases.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,21 +12,21 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "categories", schema = "public", uniqueConstraints = {@UniqueConstraint(name = "categories_name_key",
+@Table(name = "purchase_statuses", schema = "public", uniqueConstraints = {@UniqueConstraint(name = "purchase_statuses_name_key",
         columnNames = {"name"})})
-public class Category {
+public class PurchaseStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 100)
+    @Size(max = 30)
     @NotNull
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
-    @Size(max = 255)
-    @Column(name = "description")
+    @Size(max = 150)
+    @Column(name = "description", length = 150)
     private String description;
 
     @NotNull
@@ -38,11 +38,6 @@ public class Category {
     @ColumnDefault("now()")
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
-
-    @NotNull
-    @ColumnDefault("now()")
-    @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt;
 
 
 }

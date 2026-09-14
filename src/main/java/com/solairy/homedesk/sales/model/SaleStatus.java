@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.sales.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,9 +12,9 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "purchase_statuses", schema = "public", uniqueConstraints = {@UniqueConstraint(name = "purchase_statuses_name_key",
+@Table(name = "sale_statuses", schema = "public", uniqueConstraints = {@UniqueConstraint(name = "sale_statuses_name_key",
         columnNames = {"name"})})
-public class PurchaseStatus {
+public class SaleStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

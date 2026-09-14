@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.catalog.model;
 
 import com.solairy.homedesk.enums.UnitMeasureProduct;
 import jakarta.persistence.*;

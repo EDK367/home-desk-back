@@ -1,4 +1,4 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.inventory.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

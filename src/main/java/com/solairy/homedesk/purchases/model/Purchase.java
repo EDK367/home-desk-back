@@ -1,6 +1,7 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.purchases.model;
 
 import com.solairy.homedesk.auth.model.User;
+import com.solairy.homedesk.suppliers.model.Supplier;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

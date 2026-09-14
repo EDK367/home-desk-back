@@ -1,5 +1,7 @@
-package com.solairy.homedesk.models;
+package com.solairy.homedesk.inventory.model;
 
+import com.solairy.homedesk.catalog.model.Product;
+import com.solairy.homedesk.purchases.model.PurchaseItem;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
