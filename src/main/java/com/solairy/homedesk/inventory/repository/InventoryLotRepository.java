@@ -2,6 +2,8 @@ package com.solairy.homedesk.inventory.repository;
 
 import com.solairy.homedesk.inventory.model.InventoryLot;
 import com.solairy.homedesk.purchases.model.PurchaseItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,8 @@ public interface InventoryLotRepository extends JpaRepository<InventoryLot, Long
     List<InventoryLot> findByPurchaseItemIn(Collection<PurchaseItem> purchaseItems);
 
     List<InventoryLot> findByProductId(Long productId);
+
+    Page<InventoryLot> findByProductId(Long productId, Pageable pageable);
 
     List<InventoryLot> findByProductIdAndQuantityRemainingGreaterThanOrderByReceivedAtAsc(Long productId, Integer minQuantity);
 

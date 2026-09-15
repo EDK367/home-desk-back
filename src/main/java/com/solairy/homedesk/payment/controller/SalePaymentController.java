@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Sale Payments", description = "Endpoints para la gestión de pagos de venta")
 public class SalePaymentController {
 
-    private final SalePaymentService salePaymentService;
+    private final SalePaymentService service;
 
     @GetMapping("/sale/{saleId}")
     @PreAuthorize("hasAnyRole('SALES', 'ADMINISTRATION')")
@@ -32,7 +32,7 @@ public class SalePaymentController {
             @ParameterObject
             @PageableDefault(size = 10, sort = "paymentDate", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        PageResponse<SalePaymentResponse> response = salePaymentService.findBySale(saleId, pageable);
+        PageResponse<SalePaymentResponse> response = service.findBySale(saleId, pageable);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Pagos de la venta obtenidos exitosamente",
@@ -43,7 +43,7 @@ public class SalePaymentController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('SALES', 'ADMINISTRATION')")
     public ResponseEntity<ApiResponse<SalePaymentResponse>> findById(@PathVariable Long id) {
-        SalePaymentResponse response = salePaymentService.findById(id);
+        SalePaymentResponse response = service.findById(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Pago obtenido exitosamente",
@@ -56,7 +56,7 @@ public class SalePaymentController {
     public ResponseEntity<ApiResponse<SalePaymentResponse>> create(
             @Valid @RequestBody SalePaymentRequest request
     ) {
-        SalePaymentResponse response = salePaymentService.create(request);
+        SalePaymentResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 HttpStatus.CREATED.value(),
                 "Pago registrado exitosamente",
@@ -67,7 +67,7 @@ public class SalePaymentController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRATION')")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
-        salePaymentService.delete(id);
+        service.delete(id);
         return ResponseEntity.ok(ApiResponse.success(
                 HttpStatus.OK.value(),
                 "Pago eliminado exitosamente",

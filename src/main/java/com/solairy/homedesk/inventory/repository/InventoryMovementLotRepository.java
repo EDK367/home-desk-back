@@ -14,7 +14,11 @@ public interface InventoryMovementLotRepository extends JpaRepository<InventoryM
 
     List<InventoryMovementLot> findByMovement(InventoryMovement movement);
 
+    List<InventoryMovementLot> findByMovementId(Long movementId);
+
     List<InventoryMovementLot> findByMovementIn(Collection<InventoryMovement> movements);
 
     List<InventoryMovementLot> findByLot(InventoryLot lot);
+
+    List<InventoryMovementLot> findByLotId(Long lotId);
 }
