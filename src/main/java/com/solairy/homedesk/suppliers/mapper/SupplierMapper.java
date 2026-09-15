@@ -17,4 +17,8 @@ public interface SupplierMapper {
 
     @Mapping(target = "phones", source = "phones")
     SupplierResponse toSupplierResponse(Supplier supplier, List<PhoneSupplier> phones);
+
+    @Mapping(target = "phones", ignore = true)
+    SupplierResponse toSupplierResponse(Supplier supplier);
 }
+
