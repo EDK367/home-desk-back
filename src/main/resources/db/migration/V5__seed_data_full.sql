@@ -1,959 +1,513 @@
--- ======================================================================
--- Datos iniciales completos para HomeDesk
--- ======================================================================
+-- CATEGORIAS
+INSERT INTO categories (id, name, description, is_active, created_at, updated_at) VALUES
+    (1, 'Escritorios', 'Escritorios ergonómicos, de altura regulable y mesas ejecutivas para oficina y estudio', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (2, 'Sillas de Oficina', 'Sillas ergonómicas, ejecutivas y operativas diseñadas para soporte postural prolongado', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (3, 'Accesorios Ergonómicos', 'Soportes para monitores, reposapiés, brazos mecánicos y organizadores de espacio', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (4, 'Iluminación de Escritorio', 'Lámparas LED con regulación de brillo, temperatura de luz y carga inalámbrica', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (5, 'Almacenamiento y Archivo', 'Cajoneras rodantes, estanterías modulares y libreros para organización documental', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (6, 'Organización de Cables', 'Soluciones integrales de canaletas, pasacables y gestión eléctrica bajo mesa', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06');
 
--- ======================================================================
--- 1. CATEGORIAS
--- ======================================================================
-INSERT INTO categories (name, description, is_active, created_at, updated_at)
-VALUES
-    ('Escritorios', 'Escritorios ergonómicos, de altura regulable y mesas ejecutivas para oficina y estudio', true, NOW(), NOW()),
-    ('Sillas de Oficina', 'Sillas ergonómicas, ejecutivas y operativas diseñadas para soporte postural prolongado', true, NOW(), NOW()),
-    ('Accesorios Ergonómicos', 'Soportes para monitores, reposapiés, brazos mecánicos y organizadores de espacio', true, NOW(), NOW()),
-    ('Iluminación de Escritorio', 'Lámparas LED con regulación de brillo, temperatura de luz y carga inalámbrica', true, NOW(), NOW()),
-    ('Almacenamiento y Archivo', 'Cajoneras rodantes, estanterías modulares y libreros para organización documental', true, NOW(), NOW()),
-    ('Organización de Cables', 'Soluciones integrales de canaletas, pasacables y gestión eléctrica bajo mesa', true, NOW(), NOW())
-ON CONFLICT (name) DO NOTHING;
+-- CLIENTES
+INSERT INTO customers (id, full_name, tax_number, phone, email, address, is_active, created_at, updated_at) VALUES
+    (1, 'Juan Pablo Martínez Soto', 'CF-1002345-1', '+502 4123-4567', 'juan.martinez@gmail.com', '12 Calle 4-55 Zona 14, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (2, 'María Fernanda López Rivas', 'CF-2003456-2', '+502 5234-5678', 'marifer.lopez@outlook.com', 'Avenida La Reforma 9-30 Zona 10, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (3, 'Tecnologías y Consultorías Integradas S.A.', 'NIT-3456789-3', '+502 2345-6789', 'adquisiciones@tecnointegrada.com', 'Diagonal 6 10-01 Zona 10, Las Margaritas Torre 2', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (4, 'Carlos Enrique Ramírez Paz', 'CF-4567890-4', '+502 5678-9012', 'carlos.ramirez@hotmail.com', 'Condominio Las Luces, Casa 45, Santa Catarina Pinula', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (5, 'Estudio de Arquitectura e Interiorismo Nova S.A.', 'NIT-5678901-5', '+502 2456-7890', 'compras@novaarquitectura.gt', 'Vía 5 4-50 Zona 4, Cuatro Grados Norte', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (6, 'Sofía Alejandra Morales Gómez', 'CF-6789012-6', '+502 5112-3344', 'sofia.morales@gmail.com', '14 Calle 6-12 Zona 10, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (7, 'Inversiones y Desarrollos Urbanos Maya S.A.', 'NIT-7890123-7', '+502 2366-5500', 'compras@idurbanasmaya.com', 'Diagonal 6 12-42 Zona 10, Torre Design Center, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (8, 'Diego Alejandro Castillo Cabrera', 'CF-8901234-8', '+502 4789-1122', 'diego.castillo@yahoo.com', '5ta Avenida 11-30 Zona 1, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (9, 'Soluciones Digitales e Innovación S.A.', 'NIT-9012345-9', '+502 2333-8899', 'adquisiciones@solucionesdigitales.gt', 'Avenida Las Américas 18-02 Zona 14, Edificio Tiffany, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (10, 'Valeria Beatriz Rodas Méndez', 'CF-1234509-0', '+502 5901-2233', 'valeria.rodas@outlook.com', 'Boulevard Vista Hermosa 21-45 Zona 15, VH 1, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (11, 'Consultores Financieros y Fiscales de Occidente S.A.', 'NIT-2345610-1', '+502 7765-4321', 'administracion@consultoresoccidente.com', '4ta Calle 14-20 Zona 3, Quetzaltenango', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (12, 'Rodrigo Javier Pineda Fuentes', 'CF-3456721-2', '+502 4233-7788', 'rodrigo.pineda@gmail.com', 'Condominio Senderos del Bosque Casa 12, San Lucas Sacatepéquez', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (13, 'Corporación Médica Especializada San Rafael S.A.', 'NIT-4567832-3', '+502 2277-9900', 'compras@medicasanrafael.com.gt', '6ta Avenida 3-22 Zona 10, Edificio Sixtino II, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (14, 'Gabriela María Santizo Orellana', 'CF-5678943-4', '+502 5445-6677', 'gaby.santizo@hotmail.com', 'Km 16.5 Carretera a El Salvador, Fraijanes', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (16, 'Héctor Francisco Villagrán Solís', 'CF-7890165-6', '+502 4667-8899', 'hector.villagran@gmail.com', '10ma Calle 2-45 Zona 14, Residenciales Las Conchas, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (17, 'Logística y Envíos Express del Caribe S.A.', 'NIT-8901276-7', '+502 2490-5566', 'operaciones@logisticadelcaribe.com', 'Calzada Atanasio Tzul 22-00 Zona 12, Parque Industrial, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (18, 'Claudia Marcela Quiñónez Barrios', 'CF-9012387-8', '+502 5889-0011', 'claudia.quinonez@gmail.com', '18 Avenida 15-30 Zona 11, Colonia Mariscal, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (19, 'Bufete Jurídico y Asociados LegalPro S.A.', 'NIT-1023498-9', '+502 2311-4455', 'servicios@legalproguatemala.com', '12 Calle 1-25 Zona 10, Edificio Géminis 10 Torre Norte, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (20, 'Luis Eduardo Cifuentes Estrada', 'CF-2134509-1', '+502 4334-5566', 'luis.cifuentes@yahoo.com', 'Avenida Simeón Cañas 8-12 Zona 2, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (21, 'Maria luisa', '456132986', '+502 465316', 'cliente@gamil.com', '4ta venida de no se que lugar', true, '2026-09-17 19:28:55.745573-06', '2026-09-17 19:28:55.745619-06'),
+    (15, 'Agencia Creativa Pixel & Diseño S.A.', 'NIT-6789054-5', '+502 2360-1123', 'hola@pixeldiseno.gt', 'Ruta 4 6-30 Zona 4, Edificio Campus Tec, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 19:38:27.638644-06');
 
--- ======================================================================
--- 2. PRODUCTOS
--- ======================================================================
-INSERT INTO products (sku, name, description, category_id, unit_of_measure, sale_price, min_stock_level, is_active, created_at, updated_at)
-VALUES
-    (
-        'PROD-ESC-001',
-        'Escritorio Eléctrico Elevable StandDesk Pro 160x80',
-        'Escritorio de altura ajustable con motor dual silencioso, estructura de acero reforzado y memoria programable de 4 alturas',
-        (SELECT id FROM categories WHERE name = 'Escritorios'),
-        'UNIT',
-        3499.00,
-        5,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-ESC-002',
-        'Escritorio Compacto de Madera Nogal 120x60',
-        'Mesa de trabajo minimalista elaborada en melamina de alta densidad con acabado texturizado de nogal y patas metálicas',
-        (SELECT id FROM categories WHERE name = 'Escritorios'),
-        'UNIT',
-        1850.00,
-        4,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-SIL-001',
-        'Silla Ergonómica Ejecutiva Titan Mesh',
-        'Silla de oficina de alto rendimiento con respaldo de malla transpirable, soporte lumbar 3D y descansabrazos 4D',
-        (SELECT id FROM categories WHERE name = 'Sillas de Oficina'),
-        'UNIT',
-        2200.00,
-        6,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-SIL-002',
-        'Silla Giratoria Acolchada Confort Plus',
-        'Silla ergonómica operativa con tapizado en tela de alta durabilidad, espuma de inyección viscoelástica y pistón clase 4',
-        (SELECT id FROM categories WHERE name = 'Sillas de Oficina'),
-        'UNIT',
-        1450.00,
-        5,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-ACC-001',
-        'Brazo Mecánico para Doble Monitor 17-32 Pulgadas',
-        'Soporte articulado de aluminio para dos pantallas con sistema de resorte de gas, pasacables integrado y fijación VESA',
-        (SELECT id FROM categories WHERE name = 'Accesorios Ergonómicos'),
-        'UNIT',
-        780.00,
-        8,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-SET-001',
-        'Set de Organización y Guiado de Cables para Escritorio',
-        'Juego integral que incluye canaleta bajo cubierta, 10 clips magnéticos, columna vertebrada articulada y bridas de velcro',
-        (SELECT id FROM categories WHERE name = 'Organización de Cables'),
-        'SET',
-        290.00,
-        10,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-SET-002',
-        'Set Ergonómico Reposamuñecas y Tapete XXL',
-        'Conjunto ergonómico que contiene tapete de escritorio de cuero sintético resistente al agua y descansamuñecas de espuma viscoelástica',
-        (SELECT id FROM categories WHERE name = 'Accesorios Ergonómicos'),
-        'SET',
-        340.00,
-        8,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-ILU-001',
-        'Barra de Luz LED para Monitor ScreenBar Pro',
-        'Lámpara de iluminación asimétrica para monitor que previene el reflejo en pantalla, incluye control dial inalámbrico',
-        (SELECT id FROM categories WHERE name = 'Iluminación de Escritorio'),
-        'UNIT',
-        480.00,
-        7,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-ALM-001',
-        'Cajonera Metálica Rodante con Cerradura Central',
-        'Mueble archivero metálico de tres gavetas sobre ruedas reforzadas con freno y sistema de bloqueo general con llave',
-        (SELECT id FROM categories WHERE name = 'Almacenamiento y Archivo'),
-        'UNIT',
-        1250.00,
-        4,
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'PROD-SET-003',
-        'Set de Limpieza y Mantenimiento de Pantallas y Periféricos',
-        'Kit profesional que incluye cepillo retráctil de cerdas suaves, soplador de aire, solución limpiadora antiestática y paño de microfibra',
-        (SELECT id FROM categories WHERE name = 'Accesorios Ergonómicos'),
-        'SET',
-        175.00,
-        12,
-        true,
-        NOW(),
-        NOW()
-    )
-ON CONFLICT (sku) DO NOTHING;
+-- PRODUCTOS
+INSERT INTO products (id, sku, name, description, category_id, unit_of_measure, sale_price, min_stock_level, is_active, created_at, updated_at) VALUES
+    (1, 'PROD-ESC-001', 'Escritorio Eléctrico Elevable StandDesk Pro 160x80', 'Escritorio de altura ajustable con motor dual silencioso, estructura de acero reforzado y memoria programable de 4 alturas', 1, 'UNIT', 3499.00, 5, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (2, 'PROD-ESC-002', 'Escritorio Compacto de Madera Nogal 120x60', 'Mesa de trabajo minimalista elaborada en melamina de alta densidad con acabado texturizado de nogal y patas metálicas', 1, 'UNIT', 1850.00, 4, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (3, 'PROD-SIL-001', 'Silla Ergonómica Ejecutiva Titan Mesh', 'Silla de oficina de alto rendimiento con respaldo de malla transpirable, soporte lumbar 3D y descansabrazos 4D', 2, 'UNIT', 2200.00, 6, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (4, 'PROD-SIL-002', 'Silla Giratoria Acolchada Confort Plus', 'Silla ergonómica operativa con tapizado en tela de alta durabilidad, espuma de inyección viscoelástica y pistón clase 4', 2, 'UNIT', 1450.00, 5, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (5, 'PROD-ACC-001', 'Brazo Mecánico para Doble Monitor 17-32 Pulgadas', 'Soporte articulado de aluminio para dos pantallas con sistema de resorte de gas, pasacables integrado y fijación VESA', 3, 'UNIT', 780.00, 8, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (6, 'PROD-SET-001', 'Set de Organización y Guiado de Cables para Escritorio', 'Juego integral que incluye canaleta bajo cubierta, 10 clips magnéticos, columna vertebrada articulada y bridas de velcro', 6, 'SET', 290.00, 10, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (7, 'PROD-SET-002', 'Set Ergonómico Reposamuñecas y Tapete XXL', 'Conjunto ergonómico que contiene tapete de escritorio de cuero sintético resistente al agua y descansamuñecas de espuma viscoelástica', 3, 'SET', 340.00, 8, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (8, 'PROD-ILU-001', 'Barra de Luz LED para Monitor ScreenBar Pro', 'Lámpara de iluminación asimétrica para monitor que previene el reflejo en pantalla, incluye control dial inalámbrico', 4, 'UNIT', 480.00, 7, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (9, 'PROD-ALM-001', 'Cajonera Metálica Rodante con Cerradura Central', 'Mueble archivero metálico de tres gavetas sobre ruedas reforzadas con freno y sistema de bloqueo general con llave', 5, 'UNIT', 1250.00, 4, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (10, 'PROD-SET-003', 'Set de Limpieza y Mantenimiento de Pantallas y Periféricos', 'Kit profesional que incluye cepillo retráctil de cerdas suaves, soplador de aire, solución limpiadora antiestática y paño de microfibra', 3, 'SET', 175.00, 12, true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (11, 'PROD-ESC-003', 'Escritorio Esquinero en L CornerMaster 180x140', 'Mesa de trabajo ejecutiva en forma de L con estructura metálica reforzada, pasacables integrado y superficie melamínica anti-rayaduras', 1, 'UNIT', 2850.00, 4, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (12, 'PROD-ESC-004', 'Mesa de Conferencia Modular Boardroom Pro 240x120', 'Mesa de reuniones ejecutiva de gran formato con centro de conectividad integrado HDMI, tomas de corriente y puertos USB-C', 1, 'UNIT', 4500.00, 3, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (13, 'PROD-ESC-005', 'Escritorio Plegable HomeOffice SpaceSaver 100x50', 'Escritorio plegable de fácil almacenamiento ideal para espacios reducidos con base de acero esmaltado y acabado en roble claro', 1, 'UNIT', 890.00, 6, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (14, 'PROD-SIL-003', 'Silla Ergonómica Gamer Pro Lumbar Supreme', 'Silla de alto confort con mecanismo reclinable 180 grados, cojines magnéticos cervical y lumbar, tapizado transpirable de microfibra', 2, 'UNIT', 2650.00, 5, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (15, 'PROD-SIL-004', 'Silla de Conferencia Tapizada Minimalist', 'Silla para salas de reunión con diseño contemporáneo, base trineo cromada y tapicería ignífuga de alta resistencia a la fricción', 2, 'UNIT', 950.00, 8, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (16, 'PROD-SIL-005', 'Taburete Activo Ergonómico con Balanceo Sit-Stand', 'Asiento dinámico para alternar entre sentado y de pie, estimula la postura activa y fortalece el core abdominal', 2, 'UNIT', 1120.00, 5, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (17, 'PROD-ACC-002', 'Soporte Elevador de Laptop de Aluminio Ventilado', 'Base articulada y plegable para portátil de 11 a 17 pulgadas con ranuras de ventilación térmica y topes antideslizantes de silicona', 3, 'UNIT', 320.00, 10, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (18, 'PROD-ACC-003', 'Reposapiés Ergonómico Ajustable con Rodillos de Masaje', 'Plataforma con ajuste de inclinación de 3 niveles y superficie geométrica texturizada para mejorar la circulación sanguínea', 3, 'UNIT', 260.00, 8, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (19, 'PROD-ACC-004', 'Soporte para CPU Bajo Escritorio de Giro 360°', 'Montura metálica suspendida de ancho y alto regulables con rotación de 360 grados para acceso inmediato a cables traseros', 3, 'UNIT', 390.00, 6, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (20, 'PROD-ACC-005', 'Cojín Ortopédico de Espuma Viscoelástica para Asiento', 'Cojín ergonómico con corte ergonómico en U para alivio de presión en el cóccix, espuma con memoria y funda lavable', 3, 'UNIT', 210.00, 12, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (21, 'PROD-ILU-002', 'Lámpara de Escritorio LED con Brazo Articulado y Carga Qi', 'Lámpara de sobremesa con panel táctil de 5 tonos de temperatura, regulador continuo de brillo y base con cargador inalámbrico rápido', 4, 'UNIT', 520.00, 6, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (22, 'PROD-ILU-003', 'Tira de Luz LED RGB Ambiental con Control Inteligente WiFi', 'Tira lumínica adhesiva de 2 metros para parte posterior de escritorio con sincronización musical y compatibilidad con app móvil', 4, 'UNIT', 280.00, 8, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (23, 'PROD-ILU-004', 'Foco de Pie Arquitectónico de Luz Indirecta 30W', 'Luminaria de pie en aluminio anodizado para iluminación homogénea y suave de techos, disipador térmico pasivo', 4, 'UNIT', 750.00, 4, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (24, 'PROD-ALM-002', 'Estantería Modular de Acero y Melamina 5 Niveles', 'Librero organizador industrial de alta capacidad con travesaños de refuerzo en X y repisas resistentes a la humedad', 5, 'UNIT', 1650.00, 4, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (25, 'PROD-ALM-003', 'Armario Metálico Bajo de Puertas Corredizas con Llave', 'Gabinete organizador de dos puertas deslizables suaves sobre rodamientos de teflón y dos juegos de llaves maestras', 5, 'UNIT', 1980.00, 3, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (26, 'PROD-ALM-004', 'Organizador de Documentos Vertical de Malla Metálica', 'Módulo clasificador de 4 divisiones para carpetas y expedientes en acero electroestático anticorrosión', 5, 'UNIT', 145.00, 15, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (27, 'PROD-CAB-001', 'Canaleta Pasacables Espinal Articulada para StandDesk', 'Canal guía flexible tipo espina de pez que acompaña verticalmente el movimiento de escritorios elevables eléctricos', 6, 'UNIT', 220.00, 10, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (28, 'PROD-CAB-002', 'Bandeja Pasacables de Malla Metálica Bajo Mesa', 'Bandeja suspendida bajo mesa para alojar fuentes de poder, adaptadores y multicontactos evitando saturación de cables en el suelo', 6, 'UNIT', 180.00, 10, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (29, 'PROD-SET-004', 'Set de Regletas con Protección de Sobretensión y USB-C PD', 'Pack de dos regletas supresoras de picos de 900 Joules con 6 salidas AC, interruptor térmico y puertos USB de carga inteligente', 6, 'SET', 360.00, 8, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (30, 'PROD-SET-005', 'Set de Paneles Acústicos Fonoabsorbentes para Escritorio', 'Conjunto de dos paneles divisorios acústicos en fieltro PET reciclado de alta densidad con abrazaderas de fijación a mesa', 3, 'SET', 490.00, 6, true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06');
 
--- ======================================================================
--- 3. NUMEROS
--- ======================================================================
-INSERT INTO phone_numbers (phone)
-SELECT p.phone
-FROM (VALUES
-    ('+502 2334-5501'),
-    ('+502 2456-7892'),
-    ('+502 2210-9983'),
-    ('+502 6677-1124'),
-    ('+502 2399-4455'),
-    ('+502 5544-3326')
-) AS p(phone)
-WHERE NOT EXISTS (SELECT 1 FROM phone_numbers pn WHERE pn.phone = p.phone);
+-- INVENTARIO
+INSERT INTO inventory (id, product_id, quantity_on_hand, updated_at) VALUES
+    (1, 1, 7, '2026-09-17 13:28:12.559058-06'),
+    (2, 2, 9, '2026-09-17 13:28:12.559058-06'),
+    (3, 3, 11, '2026-09-17 13:28:12.559058-06'),
+    (4, 4, 7, '2026-09-17 13:28:12.559058-06'),
+    (5, 5, 14, '2026-09-17 13:28:12.559058-06'),
+    (6, 6, 24, '2026-09-17 13:28:12.559058-06'),
+    (7, 7, 19, '2026-09-17 13:28:12.559058-06'),
+    (8, 8, 17, '2026-09-17 13:28:12.559058-06'),
+    (9, 9, 10, '2026-09-17 13:28:12.559058-06'),
+    (10, 10, 35, '2026-09-17 13:28:12.559058-06'),
+    (21, 11, 5, '2026-09-17 13:28:12.559058-06'),
+    (23, 13, 12, '2026-09-17 13:28:12.559058-06'),
+    (24, 14, 10, '2026-09-17 13:28:12.559058-06'),
+    (25, 15, 8, '2026-09-17 13:28:12.559058-06'),
+    (26, 16, 7, '2026-09-17 13:28:12.559058-06'),
+    (27, 17, 26, '2026-09-17 13:28:12.559058-06'),
+    (28, 18, 18, '2026-09-17 13:28:12.559058-06'),
+    (29, 19, 14, '2026-09-17 13:28:12.559058-06'),
+    (30, 20, 19, '2026-09-17 13:28:12.559058-06'),
+    (31, 21, 13, '2026-09-17 13:28:12.559058-06'),
+    (32, 22, 17, '2026-09-17 13:28:12.559058-06'),
+    (33, 23, 9, '2026-09-17 13:28:12.559058-06'),
+    (34, 24, 7, '2026-09-17 13:28:12.559058-06'),
+    (35, 25, 6, '2026-09-17 13:28:12.559058-06'),
+    (36, 26, 23, '2026-09-17 13:28:12.559058-06'),
+    (37, 27, 20, '2026-09-17 13:28:12.559058-06'),
+    (39, 29, 17, '2026-09-17 13:28:12.559058-06'),
+    (40, 30, 12, '2026-09-17 13:28:12.559058-06'),
+    (22, 12, 13, '2026-09-17 18:11:09.936154-06'),
+    (38, 28, 26, '2026-09-17 19:50:25.686331-06');
 
--- ======================================================================
--- 4. PROVEEDORES
--- ======================================================================
-INSERT INTO suppliers (name, tax_number, contact_name, email, address, is_active, created_at, updated_at)
-VALUES
-    (
-        'Mobiliario y Ergonomía de Guatemala S.A.',
-        'NIT-9845123-1',
-        'Carlos Alberto Morales Soto',
-        'contacto@mobiliariogt.com',
-        'Calzada Roosevelt 14-25 Zona 11, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Distribuidora Tecnológica del Altiplano S.A.',
-        'NIT-6523190-4',
-        'Andrea Beatriz Fuentes López',
-        'ventas@distecnoaltiplano.gt',
-        'Avenida Las Américas 8-40 Zona 13, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Importaciones y Diseños Corporativos de Centroamérica',
-        'NIT-1123489-K',
-        'Roberto Gómez Estrada',
-        'rgomez@disenoscorp.com.gt',
-        '7ma Avenida 12-23 Zona 9, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Soluciones Metálicas y Ensambles Industriales S.A.',
-        'NIT-4432109-8',
-        'Lucía Méndez Castillo',
-        'servicioalcliente@metalicasindustriales.gt',
-        'Kilómetro 18.5 Carretera a El Salvador, Fraijanes',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Accesorios y Ergonomía Profesional del Sur S.A.',
-        'NIT-7788990-2',
-        'Fernando José Castillo Paz',
-        'info@ergonomiaprosur.gt',
-        'Boulevard Los Próceres 24-69 Zona 10, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    )
-ON CONFLICT (tax_number) DO NOTHING;
+-- ESTADOS DE COMPRA
+INSERT INTO purchase_statuses (id, name, description, is_active, created_at) VALUES
+    (1, 'SOLICITADA', 'Orden de compra solicitada y pendiente de autorización por gerencia', true, '2026-09-17 13:28:12.381631-06'),
+    (2, 'APROBADA', 'Orden de compra autorizada y transmitida formalmente al proveedor', true, '2026-09-17 13:28:12.381631-06'),
+    (3, 'EN_TRANSITO', 'Mercadería despachada por el proveedor en tránsito a bodega', true, '2026-09-17 13:28:12.381631-06'),
+    (4, 'RECIBIDA', 'Mercadería recibida satisfactoriamente en bodega con ingreso a inventario', true, '2026-09-17 13:28:12.381631-06'),
+    (5, 'CANCELADA', 'Orden de compra anulada por el departamento de compras o proveedor', true, '2026-09-17 13:28:12.381631-06');
 
--- ======================================================================
--- 5. ASOCIACIÓN TELEFONO - PROVEEDOR
--- ======================================================================
-INSERT INTO phone_suppliers (supplier_id, phone_id)
-VALUES
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-9845123-1'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 2334-5501')
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-6523190-4'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 2456-7892')
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-1123489-K'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 2210-9983')
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-4432109-8'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 6677-1124')
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-7788990-2'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 2399-4455')
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-9845123-1'),
-        (SELECT id FROM phone_numbers WHERE phone = '+502 5544-3326')
-    )
-ON CONFLICT (supplier_id, phone_id) DO NOTHING;
+-- PROVEEDORES
+INSERT INTO suppliers (id, name, tax_number, contact_name, email, address, is_active, created_at, updated_at) VALUES
+    (1, 'Mobiliario y Ergonomía de Guatemala S.A.', 'NIT-9845123-1', 'Carlos Alberto Morales Soto', 'contacto@mobiliariogt.com', 'Calzada Roosevelt 14-25 Zona 11, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (2, 'Distribuidora Tecnológica del Altiplano S.A.', 'NIT-6523190-4', 'Andrea Beatriz Fuentes López', 'ventas@distecnoaltiplano.gt', 'Avenida Las Américas 8-40 Zona 13, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (3, 'Importaciones y Diseños Corporativos de Centroamérica', 'NIT-1123489-K', 'Roberto Gómez Estrada', 'rgomez@disenoscorp.com.gt', '7ma Avenida 12-23 Zona 9, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (4, 'Soluciones Metálicas y Ensambles Industriales S.A.', 'NIT-4432109-8', 'Lucía Méndez Castillo', 'servicioalcliente@metalicasindustriales.gt', 'Kilómetro 18.5 Carretera a El Salvador, Fraijanes', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (5, 'Accesorios y Ergonomía Profesional del Sur S.A.', 'NIT-7788990-2', 'Fernando José Castillo Paz', 'info@ergonomiaprosur.gt', 'Boulevard Los Próceres 24-69 Zona 10, Ciudad de Guatemala', true, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (6, 'Luminarias y Sistemas Electrónicos de Vanguardia S.A.', 'NIT-3344556-7', 'Mariana Sofía Estrada Morales', 'ventas@lumivanguardia.com.gt', '15 Avenida 3-40 Zona 10, Edificio Géminis 10, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (7, 'Maderas y Estructuras Modulares del Norte S.A.', 'NIT-8877665-1', 'Gustavo Adolfo Palacios Reyes', 'gpalacios@maderasdelnorte.gt', 'Km 14.5 Carretera al Atlántico, Zona 17, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (8, 'Suministros Globales de Confort y Oficina S.A.', 'NIT-5566778-9', 'Patricia Elena Velásquez Cruz', 'info@suministrosconfort.com.gt', 'Calzada San Juan 32-10 Zona 7, Centro Empresarial, Ciudad de Guatemala', true, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06');
 
--- ======================================================================
--- 6. PRODUCTOS POR PROVEEDOR
--- ======================================================================
-INSERT INTO supplier_products (supplier_id, product_id, supplier_sku, cost, last_purchase_cost, created_at, updated_at)
-VALUES
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-9845123-1'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-001'),
-        'SUP1-DESK-01',
-        2350.00,
-        2350.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-9845123-1'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-002'),
-        'SUP1-DESK-02',
-        1250.00,
-        1250.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-6523190-4'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-001'),
-        'SUP2-CHAIR-01',
-        1450.00,
-        1450.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-6523190-4'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-002'),
-        'SUP2-CHAIR-02',
-        950.00,
-        950.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-7788990-2'),
-        (SELECT id FROM products WHERE sku = 'PROD-ACC-001'),
-        'SUP5-ACC-01',
-        480.00,
-        480.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-7788990-2'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-001'),
-        'SUP5-SET-01',
-        160.00,
-        160.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-7788990-2'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-002'),
-        'SUP5-SET-02',
-        190.00,
-        190.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-7788990-2'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-003'),
-        'SUP5-SET-03',
-        95.00,
-        95.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-1123489-K'),
-        (SELECT id FROM products WHERE sku = 'PROD-ILU-001'),
-        'SUP3-ILU-01',
-        280.00,
-        280.00,
-        NOW(),
-        NOW()
-    ),
-    (
-        (SELECT id FROM suppliers WHERE tax_number = 'NIT-4432109-8'),
-        (SELECT id FROM products WHERE sku = 'PROD-ALM-001'),
-        'SUP4-ALM-01',
-        820.00,
-        820.00,
-        NOW(),
-        NOW()
-    )
-ON CONFLICT (supplier_id, product_id) DO NOTHING;
+-- COMPRAS
+INSERT INTO purchases (id, supplier_id, user_id, status_id, purchase_date, subtotal, tax_amount, total_amount, notes, created_at, updated_at) VALUES
+    (1, 2, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-23 13:28:12.381631-06', 31250.00, 3750.00, 35000.00, 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas', '2026-08-23 13:28:12.381631-06', '2026-08-23 13:28:12.381631-06'),
+    (2, 1, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-18 13:28:12.381631-06', 36000.00, 4320.00, 40320.00, 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda', '2026-08-18 13:28:12.381631-06', '2026-08-18 13:28:12.381631-06'),
+    (3, 4, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-07 13:28:12.381631-06', 9840.00, 1180.80, 11020.80, 'Recepción de cajoneras rodantes de tres gavetas en acero reforzado', '2026-09-07 13:28:12.381631-06', '2026-09-07 13:28:12.381631-06'),
+    (4, 3, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-02 13:28:12.381631-06', 5600.00, 672.00, 6272.00, 'Adquisición de barras de luz LED para monitor con dial inalámbrico', '2026-09-02 13:28:12.381631-06', '2026-09-02 13:28:12.381631-06'),
+    (5, 5, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-28 13:28:12.381631-06', 22950.00, 2754.00, 25704.00, 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', '2026-08-28 13:28:12.381631-06', '2026-08-28 13:28:12.381631-06'),
+    (7, 4, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-05 13:28:12.559058-06', 23910.00, 2869.20, 26779.20, 'Recepción de estanterías metálicas de 5 niveles, armarios y organizadores verticales', '2026-09-05 13:28:12.559058-06', '2026-09-05 13:28:12.559058-06'),
+    (8, 5, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-31 13:28:12.559058-06', 10250.00, 1230.00, 11480.00, 'Lote de elevadores de laptop en aluminio, reposapiés ajustables y soportes para CPU', '2026-08-31 13:28:12.559058-06', '2026-08-31 13:28:12.559058-06'),
+    (9, 5, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-11 13:28:12.559058-06', 6250.00, 750.00, 7000.00, 'Reabastecimiento de paneles acústicos fonoabsorbentes y soportes para laptop', '2026-09-11 13:28:12.559058-06', '2026-09-11 13:28:12.559058-06'),
+    (10, 3, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-08 13:28:12.559058-06', 10175.00, 1221.00, 11396.00, 'Adquisición de canaletas espinales, bandejas pasacables y regletas con protección', '2026-09-08 13:28:12.559058-06', '2026-09-08 13:28:12.559058-06'),
+    (11, 6, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-09-03 13:28:12.559058-06', 12800.00, 1536.00, 14336.00, 'Suministro de lámparas articuladas Qi, tiras LED WiFi y focos arquitectónicos', '2026-09-03 13:28:12.559058-06', '2026-09-03 13:28:12.559058-06'),
+    (12, 8, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-29 13:28:12.559058-06', 12920.00, 1550.40, 14470.40, 'Adquisición de sillas de conferencia minimalistas y accesorios de confort postural', '2026-08-29 13:28:12.559058-06', '2026-08-29 13:28:12.559058-06'),
+    (13, 7, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-20 13:28:12.559058-06', 30700.00, 3684.00, 34384.00, 'Adquisición de escritorios esquineros en L y mesas para salas de conferencias', '2026-08-20 13:28:12.559058-06', '2026-08-20 13:28:12.559058-06'),
+    (14, 7, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-24 13:28:12.559058-06', 8700.00, 1044.00, 9744.00, 'Lote de escritorios plegables compactos para trabajo remoto', '2026-08-24 13:28:12.559058-06', '2026-08-24 13:28:12.559058-06'),
+    (15, 2, (SELECT id FROM users WHERE username = 'compra'), 4, '2026-08-26 13:28:12.559058-06', 28400.00, 3408.00, 31808.00, 'Surtido de sillas gamer ergonómicas y taburetes activos sit-stand', '2026-08-26 13:28:12.559058-06', '2026-08-26 13:28:12.559058-06'),
+    (6, 1, (SELECT id FROM users WHERE username = 'compra'), 2, '2026-09-14 13:28:12.559058-06', 19250.00, 2310.00, 21560.00, 'Segunda compra de reabastecimiento de escritorios eléctricos y compactos', '2026-09-14 13:28:12.559058-06', '2026-09-17 13:35:41.836085-06');
 
--- ======================================================================
--- 7. ESTADOS DE COMPRA
--- ======================================================================
-INSERT INTO purchase_statuses (name, description, is_active, created_at)
-VALUES
-    ('SOLICITADA', 'Orden de compra solicitada y pendiente de autorización por gerencia', true, NOW()),
-    ('APROBADA', 'Orden de compra autorizada y transmitida formalmente al proveedor', true, NOW()),
-    ('EN_TRANSITO', 'Mercadería despachada por el proveedor en tránsito a bodega', true, NOW()),
-    ('RECIBIDA', 'Mercadería recibida satisfactoriamente en bodega con ingreso a inventario', true, NOW()),
-    ('CANCELADA', 'Orden de compra anulada por el departamento de compras o proveedor', true, NOW())
-ON CONFLICT (name) DO NOTHING;
+-- DETALLE DE COMPRAS
+INSERT INTO purchase_items (id, purchase_id, product_id, quantity, unit_cost, subtotal, created_at) VALUES
+    (1, 2, 1, 10, 2350.00, 23500.00, '2026-08-18 13:28:12.381631-06'),
+    (2, 2, 2, 10, 1250.00, 12500.00, '2026-08-18 13:28:12.381631-06'),
+    (3, 1, 3, 15, 1450.00, 21750.00, '2026-08-23 13:28:12.381631-06'),
+    (4, 1, 4, 10, 950.00, 9500.00, '2026-08-23 13:28:12.381631-06'),
+    (5, 5, 5, 20, 480.00, 9600.00, '2026-08-28 13:28:12.381631-06'),
+    (6, 5, 6, 30, 160.00, 4800.00, '2026-08-28 13:28:12.381631-06'),
+    (7, 5, 7, 25, 190.00, 4750.00, '2026-08-28 13:28:12.381631-06'),
+    (8, 5, 10, 40, 95.00, 3800.00, '2026-08-28 13:28:12.381631-06'),
+    (9, 4, 8, 20, 280.00, 5600.00, '2026-09-02 13:28:12.381631-06'),
+    (10, 3, 9, 12, 820.00, 9840.00, '2026-09-07 13:28:12.381631-06'),
+    (11, 13, 11, 8, 1900.00, 15200.00, '2026-08-20 13:28:12.559058-06'),
+    (12, 13, 12, 5, 3100.00, 15500.00, '2026-08-20 13:28:12.559058-06'),
+    (13, 14, 13, 15, 580.00, 8700.00, '2026-08-24 13:28:12.559058-06'),
+    (14, 15, 14, 12, 1750.00, 21000.00, '2026-08-26 13:28:12.559058-06'),
+    (15, 15, 16, 10, 740.00, 7400.00, '2026-08-26 13:28:12.559058-06'),
+    (16, 12, 15, 16, 620.00, 9920.00, '2026-08-29 13:28:12.559058-06'),
+    (17, 12, 20, 25, 120.00, 3000.00, '2026-08-29 13:28:12.559058-06'),
+    (18, 8, 17, 20, 190.00, 3800.00, '2026-08-31 13:28:12.559058-06'),
+    (19, 8, 18, 20, 150.00, 3000.00, '2026-08-31 13:28:12.559058-06'),
+    (20, 8, 19, 15, 230.00, 3450.00, '2026-08-31 13:28:12.559058-06'),
+    (21, 11, 21, 15, 320.00, 4800.00, '2026-09-03 13:28:12.559058-06'),
+    (22, 11, 22, 20, 160.00, 3200.00, '2026-09-03 13:28:12.559058-06'),
+    (23, 11, 23, 10, 480.00, 4800.00, '2026-09-03 13:28:12.559058-06'),
+    (24, 7, 24, 10, 1080.00, 10800.00, '2026-09-05 13:28:12.559058-06'),
+    (25, 7, 25, 8, 1320.00, 10560.00, '2026-09-05 13:28:12.559058-06'),
+    (26, 7, 26, 30, 85.00, 2550.00, '2026-09-05 13:28:12.559058-06'),
+    (27, 10, 27, 25, 130.00, 3250.00, '2026-09-08 13:28:12.559058-06'),
+    (28, 10, 28, 25, 105.00, 2625.00, '2026-09-08 13:28:12.559058-06'),
+    (29, 10, 29, 20, 215.00, 4300.00, '2026-09-08 13:28:12.559058-06'),
+    (30, 9, 30, 15, 290.00, 4350.00, '2026-09-11 13:28:12.559058-06'),
+    (31, 9, 17, 10, 190.00, 1900.00, '2026-09-11 13:28:12.559058-06'),
+    (32, 6, 1, 5, 2350.00, 11750.00, '2026-09-14 13:28:12.559058-06'),
+    (33, 6, 2, 6, 1250.00, 7500.00, '2026-09-14 13:28:12.559058-06');
 
--- ======================================================================
--- 8. COMPRAS
--- ======================================================================
-INSERT INTO purchases (supplier_id, user_id, status_id, purchase_date, subtotal, tax_amount, total_amount, notes, created_at, updated_at)
-SELECT
-    s.id,
-    u.id,
-    ps.id,
-    p.purchase_date,
-    p.subtotal,
-    p.tax_amount,
-    p.total_amount,
-    p.notes,
-    p.purchase_date,
-    p.purchase_date
-FROM (VALUES
-    (
-        'NIT-9845123-1',
-        'compra',
-        'RECIBIDA',
-        NOW() - INTERVAL '30 days',
-        36000.00::numeric,
-        4320.00::numeric,
-        40320.00::numeric,
-        'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda'
-    ),
-    (
-        'NIT-6523190-4',
-        'compra',
-        'RECIBIDA',
-        NOW() - INTERVAL '25 days',
-        31250.00::numeric,
-        3750.00::numeric,
-        35000.00::numeric,
-        'Lote de sillas ejecutivas de alta gama y operativas ergonómicas'
-    ),
-    (
-        'NIT-7788990-2',
-        'compra',
-        'RECIBIDA',
-        NOW() - INTERVAL '20 days',
-        22950.00::numeric,
-        2754.00::numeric,
-        25704.00::numeric,
-        'Reabastecimiento de brazos dobles para monitores y sets ergonómicos'
-    ),
-    (
-        'NIT-1123489-K',
-        'compra',
-        'RECIBIDA',
-        NOW() - INTERVAL '15 days',
-        5600.00::numeric,
-        672.00::numeric,
-        6272.00::numeric,
-        'Adquisición de barras de luz LED para monitor con dial inalámbrico'
-    ),
-    (
-        'NIT-4432109-8',
-        'compra',
-        'RECIBIDA',
-        NOW() - INTERVAL '10 days',
-        9840.00::numeric,
-        1180.80::numeric,
-        11020.80::numeric,
-        'Recepción de cajoneras rodantes de tres gavetas en acero reforzado'
-    )
-) AS p(supplier_tax, username, status_name, purchase_date, subtotal, tax_amount, total_amount, notes)
-JOIN suppliers s ON s.tax_number = p.supplier_tax
-JOIN users u ON u.username = p.username
-JOIN purchase_statuses ps ON ps.name = p.status_name
-WHERE NOT EXISTS (SELECT 1 FROM purchases pu WHERE pu.notes = p.notes);
+-- LOTES DE INVENTARIO
+INSERT INTO inventory_lots (id, product_id, purchase_item_id, quantity_received, quantity_remaining, unit_cost, received_at, created_at) VALUES
+    (1, 1, 1, 10, 8, 2350.00, '2026-08-18 13:28:12.381631-06', '2026-08-18 13:28:12.381631-06'),
+    (2, 2, 2, 10, 9, 1250.00, '2026-08-18 13:28:12.381631-06', '2026-08-18 13:28:12.381631-06'),
+    (3, 3, 3, 15, 12, 1450.00, '2026-08-23 13:28:12.381631-06', '2026-08-23 13:28:12.381631-06'),
+    (4, 4, 4, 10, 8, 950.00, '2026-08-23 13:28:12.381631-06', '2026-08-23 13:28:12.381631-06'),
+    (5, 5, 5, 20, 16, 480.00, '2026-08-28 13:28:12.381631-06', '2026-08-28 13:28:12.381631-06'),
+    (6, 6, 6, 30, 25, 160.00, '2026-08-28 13:28:12.381631-06', '2026-08-28 13:28:12.381631-06'),
+    (7, 7, 7, 25, 20, 190.00, '2026-08-28 13:28:12.381631-06', '2026-08-28 13:28:12.381631-06'),
+    (8, 8, 9, 20, 17, 280.00, '2026-09-02 13:28:12.381631-06', '2026-09-02 13:28:12.381631-06'),
+    (9, 9, 10, 12, 10, 820.00, '2026-09-07 13:28:12.381631-06', '2026-09-07 13:28:12.381631-06'),
+    (10, 10, 8, 40, 35, 95.00, '2026-08-28 13:28:12.381631-06', '2026-08-28 13:28:12.381631-06'),
+    (11, 1, 32, 5, 4, 2350.00, '2026-09-14 13:28:12.559058-06', '2026-09-14 13:28:12.559058-06'),
+    (12, 2, 33, 6, 6, 1250.00, '2026-09-14 13:28:12.559058-06', '2026-09-14 13:28:12.559058-06'),
+    (13, 11, 11, 8, 5, 1900.00, '2026-08-20 13:28:12.559058-06', '2026-08-20 13:28:12.559058-06'),
+    (14, 12, 12, 5, 3, 3100.00, '2026-08-20 13:28:12.559058-06', '2026-08-20 13:28:12.559058-06'),
+    (15, 13, 13, 15, 12, 580.00, '2026-08-24 13:28:12.559058-06', '2026-08-24 13:28:12.559058-06'),
+    (16, 14, 14, 12, 10, 1750.00, '2026-08-26 13:28:12.559058-06', '2026-08-26 13:28:12.559058-06'),
+    (17, 15, 16, 16, 8, 620.00, '2026-08-29 13:28:12.559058-06', '2026-08-29 13:28:12.559058-06'),
+    (18, 16, 15, 10, 7, 740.00, '2026-08-26 13:28:12.559058-06', '2026-08-26 13:28:12.559058-06'),
+    (19, 17, 31, 10, 10, 190.00, '2026-09-11 13:28:12.559058-06', '2026-09-11 13:28:12.559058-06'),
+    (20, 17, 18, 20, 16, 190.00, '2026-08-31 13:28:12.559058-06', '2026-08-31 13:28:12.559058-06'),
+    (21, 18, 19, 20, 18, 150.00, '2026-08-31 13:28:12.559058-06', '2026-08-31 13:28:12.559058-06'),
+    (22, 19, 20, 15, 14, 230.00, '2026-08-31 13:28:12.559058-06', '2026-08-31 13:28:12.559058-06'),
+    (23, 20, 17, 25, 19, 120.00, '2026-08-29 13:28:12.559058-06', '2026-08-29 13:28:12.559058-06'),
+    (24, 21, 21, 15, 13, 320.00, '2026-09-03 13:28:12.559058-06', '2026-09-03 13:28:12.559058-06'),
+    (25, 22, 22, 20, 17, 160.00, '2026-09-03 13:28:12.559058-06', '2026-09-03 13:28:12.559058-06'),
+    (26, 23, 23, 10, 9, 480.00, '2026-09-03 13:28:12.559058-06', '2026-09-03 13:28:12.559058-06'),
+    (27, 24, 24, 10, 7, 1080.00, '2026-09-05 13:28:12.559058-06', '2026-09-05 13:28:12.559058-06'),
+    (28, 25, 25, 8, 6, 1320.00, '2026-09-05 13:28:12.559058-06', '2026-09-05 13:28:12.559058-06'),
+    (29, 26, 26, 30, 23, 85.00, '2026-09-05 13:28:12.559058-06', '2026-09-05 13:28:12.559058-06'),
+    (30, 27, 27, 25, 20, 130.00, '2026-09-08 13:28:12.559058-06', '2026-09-08 13:28:12.559058-06'),
+    (32, 29, 29, 20, 17, 215.00, '2026-09-08 13:28:12.559058-06', '2026-09-08 13:28:12.559058-06'),
+    (33, 30, 30, 15, 12, 290.00, '2026-09-11 13:28:12.559058-06', '2026-09-11 13:28:12.559058-06'),
+    (31, 28, 28, 25, 20, 105.00, '2026-09-08 13:28:12.559058-06', '2026-09-08 13:28:12.559058-06');
 
--- ======================================================================
--- 9. DETALLE DE COMPRAS
--- ======================================================================
-INSERT INTO purchase_items (purchase_id, product_id, quantity, unit_cost, subtotal, created_at)
-VALUES
-    (
-        (SELECT id FROM purchases WHERE notes = 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-001'),
-        10,
-        2350.00,
-        23500.00,
-        NOW() - INTERVAL '30 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-002'),
-        10,
-        1250.00,
-        12500.00,
-        NOW() - INTERVAL '30 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-001'),
-        15,
-        1450.00,
-        21750.00,
-        NOW() - INTERVAL '25 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-002'),
-        10,
-        950.00,
-        9500.00,
-        NOW() - INTERVAL '25 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos'),
-        (SELECT id FROM products WHERE sku = 'PROD-ACC-001'),
-        20,
-        480.00,
-        9600.00,
-        NOW() - INTERVAL '20 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-001'),
-        30,
-        160.00,
-        4800.00,
-        NOW() - INTERVAL '20 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-002'),
-        25,
-        190.00,
-        4750.00,
-        NOW() - INTERVAL '20 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-003'),
-        40,
-        95.00,
-        3800.00,
-        NOW() - INTERVAL '20 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Adquisición de barras de luz LED para monitor con dial inalámbrico'),
-        (SELECT id FROM products WHERE sku = 'PROD-ILU-001'),
-        20,
-        280.00,
-        5600.00,
-        NOW() - INTERVAL '15 days'
-    ),
-    (
-        (SELECT id FROM purchases WHERE notes = 'Recepción de cajoneras rodantes de tres gavetas en acero reforzado'),
-        (SELECT id FROM products WHERE sku = 'PROD-ALM-001'),
-        12,
-        820.00,
-        9840.00,
-        NOW() - INTERVAL '10 days'
-    )
-ON CONFLICT (purchase_id, product_id) DO NOTHING;
+-- MOVIMIENTOS DE INVENTARIO
+INSERT INTO inventory_movements (id, product_id, user_id, movement_type, quantity, balance_after, reference_type, reference_id, costing_method, notes, created_at) VALUES
+    (1, 1, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 2, 'PEPS', 'Ingreso inicial por recepción de compra #1', '2026-08-18 13:28:12.381631-06'),
+    (2, 3, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 1, 'PEPS', 'Ingreso inicial por recepción de compra #2', '2026-08-23 13:28:12.381631-06'),
+    (3, 5, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 5, 'PEPS', 'Ingreso inicial por recepción de compra #3', '2026-08-28 13:28:12.381631-06'),
+    (4, 6, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 30, 30, 'PURCHASE', 5, 'PEPS', 'Ingreso inicial por recepción de compra #3', '2026-08-28 13:28:12.381631-06'),
+    (5, 8, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 4, 'PEPS', 'Ingreso inicial por recepción de compra #4', '2026-09-02 13:28:12.381631-06'),
+    (6, 9, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 12, 12, 'PURCHASE', 3, 'PEPS', 'Ingreso inicial por recepción de compra #5', '2026-09-07 13:28:12.381631-06'),
+    (7, 1, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 5, 5, 'PURCHASE', 6, 'PEPS', 'Ingreso por recepción de compra #15 - PROD-ESC-001', '2026-09-14 13:28:12.559058-06'),
+    (8, 2, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 6, 6, 'PURCHASE', 6, 'PEPS', 'Ingreso por recepción de compra #15 - PROD-ESC-002', '2026-09-14 13:28:12.559058-06'),
+    (9, 25, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 8, 8, 'PURCHASE', 7, 'PEPS', 'Ingreso por recepción de compra #12 - PROD-ALM-003', '2026-09-05 13:28:12.559058-06'),
+    (10, 24, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 7, 'PEPS', 'Ingreso por recepción de compra #12 - PROD-ALM-002', '2026-09-05 13:28:12.559058-06'),
+    (11, 26, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 30, 30, 'PURCHASE', 7, 'PEPS', 'Ingreso por recepción de compra #12 - PROD-ALM-004', '2026-09-05 13:28:12.559058-06'),
+    (12, 17, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 8, 'PEPS', 'Ingreso por recepción de compra #10 - PROD-ACC-002', '2026-08-31 13:28:12.559058-06'),
+    (13, 18, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 8, 'PEPS', 'Ingreso por recepción de compra #10 - PROD-ACC-003', '2026-08-31 13:28:12.559058-06'),
+    (14, 19, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 8, 'PEPS', 'Ingreso por recepción de compra #10 - PROD-ACC-004', '2026-08-31 13:28:12.559058-06'),
+    (15, 17, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 9, 'PEPS', 'Ingreso por recepción de compra #14 - PROD-ACC-002', '2026-09-11 13:28:12.559058-06'),
+    (16, 30, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 9, 'PEPS', 'Ingreso por recepción de compra #14 - PROD-SET-005', '2026-09-11 13:28:12.559058-06'),
+    (17, 29, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 10, 'PEPS', 'Ingreso por recepción de compra #13 - PROD-SET-004', '2026-09-08 13:28:12.559058-06'),
+    (18, 28, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 25, 25, 'PURCHASE', 10, 'PEPS', 'Ingreso por recepción de compra #13 - PROD-CAB-002', '2026-09-08 13:28:12.559058-06'),
+    (19, 27, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 25, 25, 'PURCHASE', 10, 'PEPS', 'Ingreso por recepción de compra #13 - PROD-CAB-001', '2026-09-08 13:28:12.559058-06'),
+    (20, 22, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 11, 'PEPS', 'Ingreso por recepción de compra #11 - PROD-ILU-003', '2026-09-03 13:28:12.559058-06'),
+    (21, 23, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 11, 'PEPS', 'Ingreso por recepción de compra #11 - PROD-ILU-004', '2026-09-03 13:28:12.559058-06'),
+    (22, 21, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 11, 'PEPS', 'Ingreso por recepción de compra #11 - PROD-ILU-002', '2026-09-03 13:28:12.559058-06'),
+    (23, 15, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 16, 16, 'PURCHASE', 12, 'PEPS', 'Ingreso por recepción de compra #9 - PROD-SIL-004', '2026-08-29 13:28:12.559058-06'),
+    (24, 20, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 25, 25, 'PURCHASE', 12, 'PEPS', 'Ingreso por recepción de compra #9 - PROD-ACC-005', '2026-08-29 13:28:12.559058-06'),
+    (25, 11, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 8, 8, 'PURCHASE', 13, 'PEPS', 'Ingreso por recepción de compra #6 - PROD-ESC-003', '2026-08-20 13:28:12.559058-06'),
+    (26, 12, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 5, 5, 'PURCHASE', 13, 'PEPS', 'Ingreso por recepción de compra #6 - PROD-ESC-004', '2026-08-20 13:28:12.559058-06'),
+    (27, 13, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 14, 'PEPS', 'Ingreso por recepción de compra #7 - PROD-ESC-005', '2026-08-24 13:28:12.559058-06'),
+    (28, 14, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 12, 12, 'PURCHASE', 15, 'PEPS', 'Ingreso por recepción de compra #8 - PROD-SIL-003', '2026-08-26 13:28:12.559058-06'),
+    (29, 16, (SELECT id FROM users WHERE username = 'inventory'), 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 15, 'PEPS', 'Ingreso por recepción de compra #8 - PROD-SIL-005', '2026-08-26 13:28:12.559058-06'),
+    (30, 21, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 13, 'SALE', 6, 'PEPS', 'Salida por venta FACT-001-00021 - PROD-ILU-002', '2026-09-14 13:28:12.559058-06'),
+    (31, 29, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 17, 'SALE', 6, 'PEPS', 'Salida por venta FACT-001-00021 - PROD-SET-004', '2026-09-14 13:28:12.559058-06'),
+    (32, 17, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 26, 'SALE', 7, 'PEPS', 'Salida por venta FACT-001-00022 - PROD-ACC-002', '2026-09-14 13:28:12.559058-06'),
+    (33, 20, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 19, 'SALE', 7, 'PEPS', 'Salida por venta FACT-001-00022 - PROD-ACC-005', '2026-09-14 13:28:12.559058-06'),
+    (34, 30, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 12, 'SALE', 8, 'PEPS', 'Salida por venta FACT-001-00023 - PROD-SET-005', '2026-09-15 13:28:12.559058-06'),
+    (35, 1, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 7, 'SALE', 8, 'PEPS', 'Salida por venta FACT-001-00023 - PROD-ESC-001', '2026-09-15 13:28:12.559058-06'),
+    (36, 5, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 14, 'SALE', 8, 'PEPS', 'Salida por venta FACT-001-00023 - PROD-ACC-001', '2026-09-15 13:28:12.559058-06'),
+    (37, 16, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 7, 'SALE', 9, 'PEPS', 'Salida por venta FACT-001-00024 - PROD-SIL-005', '2026-09-16 13:28:12.559058-06'),
+    (38, 22, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 17, 'SALE', 9, 'PEPS', 'Salida por venta FACT-001-00024 - PROD-ILU-003', '2026-09-16 13:28:12.559058-06'),
+    (39, 25, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 6, 'SALE', 10, 'PEPS', 'Salida por venta FACT-001-00025 - PROD-ALM-003', '2026-09-16 13:28:12.559058-06'),
+    (40, 27, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 20, 'SALE', 10, 'PEPS', 'Salida por venta FACT-001-00025 - PROD-CAB-001', '2026-09-16 13:28:12.559058-06'),
+    (41, 11, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 5, 'SALE', 10, 'PEPS', 'Salida por venta FACT-001-00025 - PROD-ESC-003', '2026-09-16 13:28:12.559058-06'),
+    (42, 3, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 11, 'SALE', 11, 'PEPS', 'Salida por venta FACT-001-00006 - PROD-SIL-001', '2026-08-22 13:28:12.559058-06'),
+    (43, 11, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 5, 'SALE', 11, 'PEPS', 'Salida por venta FACT-001-00006 - PROD-ESC-003', '2026-08-22 13:28:12.559058-06'),
+    (44, 13, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 12, 'SALE', 12, 'PEPS', 'Salida por venta FACT-001-00007 - PROD-ESC-005', '2026-08-25 13:28:12.559058-06'),
+    (45, 12, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 3, 'SALE', 12, 'PEPS', 'Salida por venta FACT-001-00007 - PROD-ESC-004', '2026-08-25 13:28:12.559058-06'),
+    (46, 14, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 10, 'SALE', 13, 'PEPS', 'Salida por venta FACT-001-00008 - PROD-SIL-003', '2026-08-27 13:28:12.559058-06'),
+    (47, 7, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 19, 'SALE', 13, 'PEPS', 'Salida por venta FACT-001-00008 - PROD-SET-002', '2026-08-27 13:28:12.559058-06'),
+    (48, 15, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -4, 8, 'SALE', 14, 'PEPS', 'Salida por venta FACT-001-00009 - PROD-SIL-004', '2026-08-30 13:28:12.559058-06'),
+    (49, 20, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -4, 19, 'SALE', 14, 'PEPS', 'Salida por venta FACT-001-00009 - PROD-ACC-005', '2026-08-30 13:28:12.559058-06'),
+    (50, 17, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 26, 'SALE', 15, 'PEPS', 'Salida por venta FACT-001-00010 - PROD-ACC-002', '2026-09-01 13:28:12.559058-06'),
+    (51, 18, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 18, 'SALE', 15, 'PEPS', 'Salida por venta FACT-001-00010 - PROD-ACC-003', '2026-09-01 13:28:12.559058-06'),
+    (52, 11, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 5, 'SALE', 16, 'PEPS', 'Salida por venta FACT-001-00011 - PROD-ESC-003', '2026-09-02 13:28:12.559058-06'),
+    (53, 16, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 7, 'SALE', 16, 'PEPS', 'Salida por venta FACT-001-00011 - PROD-SIL-005', '2026-09-02 13:28:12.559058-06'),
+    (54, 19, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 14, 'SALE', 16, 'PEPS', 'Salida por venta FACT-001-00011 - PROD-ACC-004', '2026-09-02 13:28:12.559058-06'),
+    (55, 22, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 17, 'SALE', 17, 'PEPS', 'Salida por venta FACT-001-00012 - PROD-ILU-003', '2026-09-04 13:28:12.559058-06'),
+    (56, 21, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 13, 'SALE', 17, 'PEPS', 'Salida por venta FACT-001-00012 - PROD-ILU-002', '2026-09-04 13:28:12.559058-06'),
+    (57, 25, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 6, 'SALE', 18, 'PEPS', 'Salida por venta FACT-001-00013 - PROD-ALM-003', '2026-09-06 13:28:12.559058-06'),
+    (58, 26, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -3, 23, 'SALE', 18, 'PEPS', 'Salida por venta FACT-001-00013 - PROD-ALM-004', '2026-09-06 13:28:12.559058-06'),
+    (59, 24, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 7, 'SALE', 18, 'PEPS', 'Salida por venta FACT-001-00013 - PROD-ALM-002', '2026-09-06 13:28:12.559058-06'),
+    (60, 4, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 7, 'SALE', 19, 'PEPS', 'Salida por venta FACT-001-00014 - PROD-SIL-002', '2026-09-07 13:28:12.559058-06'),
+    (61, 13, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 12, 'SALE', 19, 'PEPS', 'Salida por venta FACT-001-00014 - PROD-ESC-005', '2026-09-07 13:28:12.559058-06'),
+    (62, 27, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -3, 20, 'SALE', 20, 'PEPS', 'Salida por venta FACT-001-00015 - PROD-CAB-001', '2026-09-09 13:28:12.559058-06'),
+    (63, 29, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 17, 'SALE', 20, 'PEPS', 'Salida por venta FACT-001-00015 - PROD-SET-004', '2026-09-09 13:28:12.559058-06'),
+    (64, 28, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -3, 22, 'SALE', 20, 'PEPS', 'Salida por venta FACT-001-00015 - PROD-CAB-002', '2026-09-09 13:28:12.559058-06'),
+    (65, 23, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 9, 'SALE', 21, 'PEPS', 'Salida por venta FACT-001-00016 - PROD-ILU-004', '2026-09-10 13:28:12.559058-06'),
+    (66, 6, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 24, 'SALE', 21, 'PEPS', 'Salida por venta FACT-001-00016 - PROD-SET-001', '2026-09-10 13:28:12.559058-06'),
+    (67, 26, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -4, 23, 'SALE', 22, 'PEPS', 'Salida por venta FACT-001-00017 - PROD-ALM-004', '2026-09-11 13:28:12.559058-06'),
+    (68, 24, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 7, 'SALE', 22, 'PEPS', 'Salida por venta FACT-001-00017 - PROD-ALM-002', '2026-09-11 13:28:12.559058-06'),
+    (69, 14, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 10, 'SALE', 23, 'PEPS', 'Salida por venta FACT-001-00018 - PROD-SIL-003', '2026-09-12 13:28:12.559058-06'),
+    (70, 17, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 26, 'SALE', 23, 'PEPS', 'Salida por venta FACT-001-00018 - PROD-ACC-002', '2026-09-12 13:28:12.559058-06'),
+    (71, 15, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -4, 8, 'SALE', 24, 'PEPS', 'Salida por venta FACT-001-00019 - PROD-SIL-004', '2026-09-12 13:28:12.559058-06'),
+    (72, 12, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 3, 'SALE', 24, 'PEPS', 'Salida por venta FACT-001-00019 - PROD-ESC-004', '2026-09-12 13:28:12.559058-06'),
+    (73, 30, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 12, 'SALE', 25, 'PEPS', 'Salida por venta FACT-001-00020 - PROD-SET-005', '2026-09-13 13:28:12.559058-06'),
+    (74, 18, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -1, 18, 'SALE', 25, 'PEPS', 'Salida por venta FACT-001-00020 - PROD-ACC-003', '2026-09-13 13:28:12.559058-06'),
+    (75, 28, (SELECT id FROM users WHERE username = 'inventory'), 'AJUSTE_ENTRADA', 6, 28, 'MANUAL_ADJUSTMENT', NULL, 'PEPS', 'Conteo trimestral', '2026-09-17 18:10:22.094808-06'),
+    (76, 12, (SELECT id FROM users WHERE username = 'inventory'), 'AJUSTE_ENTRADA', 10, 13, 'MANUAL_ADJUSTMENT', NULL, 'PEPS', 'Re ajuste de materilaes', '2026-09-17 18:11:09.938818-06'),
+    (77, 28, (SELECT id FROM users WHERE username = 'sales'), 'SALIDA_VENTA', -2, 26, 'SALE', 26, 'PEPS', 'Salida por venta FACT-001-00026', '2026-09-17 19:50:25.687491-06');
 
--- ======================================================================
--- 10. LOTES DE INVENTARIO
--- ======================================================================
-INSERT INTO inventory_lots (product_id, purchase_item_id, quantity_received, quantity_remaining, unit_cost, received_at, created_at)
-SELECT
-    pr.id,
-    pi.id,
-    l.quantity_received,
-    l.quantity_remaining,
-    l.unit_cost,
-    l.received_at,
-    l.received_at
-FROM (VALUES
-    ('PROD-ESC-001', 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda', 10, 8, 2350.00::numeric, NOW() - INTERVAL '30 days'),
-    ('PROD-ESC-002', 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda', 10, 9, 1250.00::numeric, NOW() - INTERVAL '30 days'),
-    ('PROD-SIL-001', 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas', 15, 12, 1450.00::numeric, NOW() - INTERVAL '25 days'),
-    ('PROD-SIL-002', 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas', 10, 8, 950.00::numeric, NOW() - INTERVAL '25 days'),
-    ('PROD-ACC-001', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 20, 16, 480.00::numeric, NOW() - INTERVAL '20 days'),
-    ('PROD-SET-001', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 30, 25, 160.00::numeric, NOW() - INTERVAL '20 days'),
-    ('PROD-SET-002', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 25, 20, 190.00::numeric, NOW() - INTERVAL '20 days'),
-    ('PROD-SET-003', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 40, 35, 95.00::numeric, NOW() - INTERVAL '20 days'),
-    ('PROD-ILU-001', 'Adquisición de barras de luz LED para monitor con dial inalámbrico', 20, 17, 280.00::numeric, NOW() - INTERVAL '15 days'),
-    ('PROD-ALM-001', 'Recepción de cajoneras rodantes de tres gavetas en acero reforzado', 12, 10, 820.00::numeric, NOW() - INTERVAL '10 days')
-) AS l(product_sku, purchase_notes, quantity_received, quantity_remaining, unit_cost, received_at)
-JOIN products pr ON pr.sku = l.product_sku
-JOIN purchases pu ON pu.notes = l.purchase_notes
-JOIN purchase_items pi ON pi.purchase_id = pu.id AND pi.product_id = pr.id
-ON CONFLICT (purchase_item_id) DO NOTHING;
+-- LOTES DE MOVIMIENTO
+INSERT INTO inventory_movement_lots (id, movement_id, lot_id, quantity, unit_cost) VALUES
+    (1, 1, 1, 10, 2350.00),
+    (2, 2, 3, 15, 1450.00),
+    (3, 3, 5, 20, 480.00),
+    (4, 4, 6, 30, 160.00),
+    (5, 5, 8, 20, 280.00),
+    (6, 6, 9, 12, 820.00),
+    (7, 7, 11, 5, 2350.00),
+    (8, 8, 12, 6, 1250.00),
+    (9, 25, 13, 8, 1900.00),
+    (10, 26, 14, 5, 3100.00),
+    (11, 27, 15, 15, 580.00),
+    (12, 28, 16, 12, 1750.00),
+    (13, 23, 17, 16, 620.00),
+    (14, 29, 18, 10, 740.00),
+    (15, 15, 19, 10, 190.00),
+    (16, 12, 20, 20, 190.00),
+    (17, 13, 21, 20, 150.00),
+    (18, 14, 22, 15, 230.00),
+    (19, 24, 23, 25, 120.00),
+    (20, 22, 24, 15, 320.00),
+    (21, 20, 25, 20, 160.00),
+    (22, 21, 26, 10, 480.00),
+    (23, 10, 27, 10, 1080.00),
+    (24, 9, 28, 8, 1320.00),
+    (25, 11, 29, 30, 85.00),
+    (26, 19, 30, 25, 130.00),
+    (27, 18, 31, 25, 105.00),
+    (28, 17, 32, 20, 215.00),
+    (29, 16, 33, 15, 290.00),
+    (30, 77, 31, 2, 105.00);
 
--- ======================================================================
--- 11. EXISTENCIAS EN INVENTARIO
--- ======================================================================
-INSERT INTO inventory (product_id, quantity_on_hand, updated_at)
-SELECT
-    pr.id,
-    inv.quantity_on_hand,
-    NOW()
-FROM (VALUES
-    ('PROD-ESC-001', 8),
-    ('PROD-ESC-002', 9),
-    ('PROD-SIL-001', 12),
-    ('PROD-SIL-002', 8),
-    ('PROD-ACC-001', 16),
-    ('PROD-SET-001', 25),
-    ('PROD-SET-002', 20),
-    ('PROD-SET-003', 35),
-    ('PROD-ILU-001', 17),
-    ('PROD-ALM-001', 10)
-) AS inv(product_sku, quantity_on_hand)
-JOIN products pr ON pr.sku = inv.product_sku
-ON CONFLICT (product_id) DO UPDATE
-SET quantity_on_hand = EXCLUDED.quantity_on_hand,
-    updated_at = NOW();
+-- METODOS DE PAGO
+INSERT INTO payment_methods (id, name, description, is_active, created_at) VALUES
+    (1, 'EFECTIVO', 'Pago en efectivo en moneda de curso legal (Quetzales)', true, '2026-09-17 13:28:12.381631-06'),
+    (2, 'TARJETA_CREDITO', 'Pago mediante tarjeta de crédito internacional o local Visa y MasterCard', true, '2026-09-17 13:28:12.381631-06'),
+    (3, 'TARJETA_DEBITO', 'Pago directo mediante débito bancario autorizado', true, '2026-09-17 13:28:12.381631-06'),
+    (4, 'TRANSEFERENCIA_BANCARIA', 'Transferencia bancaria directa inmediata vía ACH o banca en línea', true, '2026-09-17 13:28:12.381631-06');
 
--- ======================================================================
--- 12. MOVIMIENTOS DE INVENTARIO (INVENTORY MOVEMENTS)
--- ======================================================================
-INSERT INTO inventory_movements (product_id, user_id, movement_type, quantity, balance_after, reference_type, reference_id, costing_method, notes, created_at)
-SELECT
-    pr.id,
-    u.id,
-    m.movement_type,
-    m.quantity,
-    m.balance_after,
-    m.reference_type,
-    pu.id,
-    m.costing_method,
-    m.notes,
-    m.created_at
-FROM (VALUES
-    ('PROD-ESC-001', 'inventory', 'ENTRADA_COMPRA', 10, 10, 'PURCHASE', 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda', 'PEPS', 'Ingreso inicial por recepción de compra #1', NOW() - INTERVAL '30 days'),
-    ('PROD-SIL-001', 'inventory', 'ENTRADA_COMPRA', 15, 15, 'PURCHASE', 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas', 'PEPS', 'Ingreso inicial por recepción de compra #2', NOW() - INTERVAL '25 days'),
-    ('PROD-ACC-001', 'inventory', 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 'PEPS', 'Ingreso inicial por recepción de compra #3', NOW() - INTERVAL '20 days'),
-    ('PROD-SET-001', 'inventory', 'ENTRADA_COMPRA', 30, 30, 'PURCHASE', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 'PEPS', 'Ingreso inicial por recepción de compra #3', NOW() - INTERVAL '20 days'),
-    ('PROD-ILU-001', 'inventory', 'ENTRADA_COMPRA', 20, 20, 'PURCHASE', 'Adquisición de barras de luz LED para monitor con dial inalámbrico', 'PEPS', 'Ingreso inicial por recepción de compra #4', NOW() - INTERVAL '15 days'),
-    ('PROD-ALM-001', 'inventory', 'ENTRADA_COMPRA', 12, 12, 'PURCHASE', 'Recepción de cajoneras rodantes de tres gavetas en acero reforzado', 'PEPS', 'Ingreso inicial por recepción de compra #5', NOW() - INTERVAL '10 days')
-) AS m(product_sku, username, movement_type, quantity, balance_after, reference_type, purchase_notes, costing_method, notes, created_at)
-JOIN products pr ON pr.sku = m.product_sku
-JOIN users u ON u.username = m.username
-JOIN purchases pu ON pu.notes = m.purchase_notes
-WHERE NOT EXISTS (SELECT 1 FROM inventory_movements im WHERE im.notes = m.notes AND im.product_id = pr.id);
+-- NUMEROS DE TELEFONO
+INSERT INTO phone_numbers (id, phone) VALUES
+    (1, '+502 5544-3326'),
+    (2, '+502 6677-1124'),
+    (3, '+502 2334-5501'),
+    (4, '+502 2399-4455'),
+    (5, '+502 2210-9983'),
+    (6, '+502 2456-7892'),
+    (7, '+502 2388-7711'),
+    (8, '+502 2255-8833'),
+    (9, '+502 2433-9900');
 
--- ======================================================================
--- 13. LOTES DE MOVIMIENTO
--- ======================================================================
-INSERT INTO inventory_movement_lots (movement_id, lot_id, quantity, unit_cost)
-SELECT
-    im.id,
-    il.id,
-    ml.quantity,
-    ml.unit_cost
-FROM (VALUES
-    ('PROD-ESC-001', 'Ingreso inicial por recepción de compra #1', 'Adquisición inicial de escritorios eléctricos y compactos para surtido de tienda', 10, 2350.00::numeric),
-    ('PROD-SIL-001', 'Ingreso inicial por recepción de compra #2', 'Lote de sillas ejecutivas de alta gama y operativas ergonómicas', 15, 1450.00::numeric),
-    ('PROD-ACC-001', 'Ingreso inicial por recepción de compra #3', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 20, 480.00::numeric),
-    ('PROD-SET-001', 'Ingreso inicial por recepción de compra #3', 'Reabastecimiento de brazos dobles para monitores y sets ergonómicos', 30, 160.00::numeric),
-    ('PROD-ILU-001', 'Ingreso inicial por recepción de compra #4', 'Adquisición de barras de luz LED para monitor con dial inalámbrico', 20, 280.00::numeric),
-    ('PROD-ALM-001', 'Ingreso inicial por recepción de compra #5', 'Recepción de cajoneras rodantes de tres gavetas en acero reforzado', 12, 820.00::numeric)
-) AS ml(product_sku, movement_notes, purchase_notes, quantity, unit_cost)
-JOIN products pr ON pr.sku = ml.product_sku
-JOIN inventory_movements im ON im.product_id = pr.id AND im.notes = ml.movement_notes
-JOIN purchases pu ON pu.notes = ml.purchase_notes
-JOIN purchase_items pi ON pi.purchase_id = pu.id AND pi.product_id = pr.id
-JOIN inventory_lots il ON il.purchase_item_id = pi.id
-WHERE NOT EXISTS (
-    SELECT 1 FROM inventory_movement_lots iml
-    WHERE iml.movement_id = im.id AND iml.lot_id = il.id
-);
+-- TELEFONOS DE PROVEEDORES
+INSERT INTO phone_suppliers (id, supplier_id, phone_id) VALUES
+    (1, 1, 3),
+    (2, 2, 6),
+    (3, 3, 5),
+    (4, 4, 2),
+    (5, 5, 4),
+    (6, 1, 1),
+    (7, 6, 7),
+    (8, 7, 8),
+    (9, 8, 9);
 
--- ======================================================================
--- 14. CLIENTES
--- ======================================================================
-INSERT INTO customers (full_name, tax_number, phone, email, address, is_active, created_at, updated_at)
-VALUES
-    (
-        'Juan Pablo Martínez Soto',
-        'CF-1002345-1',
-        '+502 4123-4567',
-        'juan.martinez@gmail.com',
-        '12 Calle 4-55 Zona 14, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'María Fernanda López Rivas',
-        'CF-2003456-2',
-        '+502 5234-5678',
-        'marifer.lopez@outlook.com',
-        'Avenida La Reforma 9-30 Zona 10, Ciudad de Guatemala',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Tecnologías y Consultorías Integradas S.A.',
-        'NIT-3456789-3',
-        '+502 2345-6789',
-        'adquisiciones@tecnointegrada.com',
-        'Diagonal 6 10-01 Zona 10, Las Margaritas Torre 2',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Carlos Enrique Ramírez Paz',
-        'CF-4567890-4',
-        '+502 5678-9012',
-        'carlos.ramirez@hotmail.com',
-        'Condominio Las Luces, Casa 45, Santa Catarina Pinula',
-        true,
-        NOW(),
-        NOW()
-    ),
-    (
-        'Estudio de Arquitectura e Interiorismo Nova S.A.',
-        'NIT-5678901-5',
-        '+502 2456-7890',
-        'compras@novaarquitectura.gt',
-        'Vía 5 4-50 Zona 4, Cuatro Grados Norte',
-        true,
-        NOW(),
-        NOW()
-    )
-ON CONFLICT (tax_number) DO NOTHING;
+-- ESTADOS DE VENTA
+INSERT INTO sale_statuses (id, name, description, is_active, created_at) VALUES
+    (1, 'PENDIENTE', 'Venta registrada pendiente de validación de pago o preparación', true, '2026-09-17 13:28:12.381631-06'),
+    (2, 'PAGADA', 'Pago recibido y validado, pendiente de despacho o entrega al cliente', true, '2026-09-17 13:28:12.381631-06'),
+    (3, 'ENTREGADA', 'Mercadería despachada y entregada al cliente con acuse de recibido', true, '2026-09-17 13:28:12.381631-06'),
+    (4, 'COMPLETADA', 'Venta finalizada exitosamente con cobro y entrega conformes', true, '2026-09-17 13:28:12.381631-06'),
+    (5, 'CANCELADA', 'Venta anulada sin impacto financiero ni despacho de inventario', true, '2026-09-17 13:28:12.381631-06');
 
--- ======================================================================
--- 15. ESTADOS DE VENTA
--- ======================================================================
-INSERT INTO sale_statuses (name, description, is_active, created_at)
-VALUES
-    ('PENDIENTE', 'Venta registrada pendiente de validación de pago o preparación', true, NOW()),
-    ('PAGADA', 'Pago recibido y validado, pendiente de despacho o entrega al cliente', true, NOW()),
-    ('ENTREGADA', 'Mercadería despachada y entregada al cliente con acuse de recibido', true, NOW()),
-    ('COMPLETADA', 'Venta finalizada exitosamente con cobro y entrega conformes', true, NOW()),
-    ('CANCELADA', 'Venta anulada sin impacto financiero ni despacho de inventario', true, NOW())
-ON CONFLICT (name) DO NOTHING;
+-- VENTAS
+INSERT INTO sales (id, customer_id, user_id, status_id, invoice_number, sale_date, subtotal, tax_amount, total_amount, invoice_pdf_path, created_at, updated_at) VALUES
+    (1, 1, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00001', '2026-09-05 13:28:12.381631-06', 7778.00, 933.36, 8711.36, '/invoices/2026/FACT-001-00001.pdf', '2026-09-05 13:28:12.381631-06', '2026-09-05 13:28:12.381631-06'),
+    (2, 2, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00002', '2026-09-08 13:28:12.381631-06', 2540.00, 304.80, 2844.80, '/invoices/2026/FACT-001-00002.pdf', '2026-09-08 13:28:12.381631-06', '2026-09-08 13:28:12.381631-06'),
+    (3, 3, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00003', '2026-09-10 13:28:12.381631-06', 9335.00, 1120.20, 10455.20, '/invoices/2026/FACT-001-00003.pdf', '2026-09-10 13:28:12.381631-06', '2026-09-10 13:28:12.381631-06'),
+    (4, 4, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00004', '2026-09-13 13:28:12.381631-06', 2330.00, 279.60, 2609.60, '/invoices/2026/FACT-001-00004.pdf', '2026-09-13 13:28:12.381631-06', '2026-09-13 13:28:12.381631-06'),
+    (5, 5, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00005', '2026-09-15 13:28:12.381631-06', 7450.00, 894.00, 8344.00, '/invoices/2026/FACT-001-00005.pdf', '2026-09-15 13:28:12.381631-06', '2026-09-15 13:28:12.381631-06'),
+    (6, 1, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00021', '2026-09-14 13:28:12.559058-06', 880.00, 105.60, 985.60, '/invoices/2026/FACT-001-00021.pdf', '2026-09-14 13:28:12.559058-06', '2026-09-14 13:28:12.559058-06'),
+    (7, 2, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00022', '2026-09-14 13:28:12.559058-06', 740.00, 88.80, 828.80, '/invoices/2026/FACT-001-00022.pdf', '2026-09-14 13:28:12.559058-06', '2026-09-14 13:28:12.559058-06'),
+    (8, 3, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00023', '2026-09-15 13:28:12.559058-06', 6039.00, 724.68, 6763.68, '/invoices/2026/FACT-001-00023.pdf', '2026-09-15 13:28:12.559058-06', '2026-09-15 13:28:12.559058-06'),
+    (9, 4, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00024', '2026-09-16 13:28:12.559058-06', 1400.00, 168.00, 1568.00, '/invoices/2026/FACT-001-00024.pdf', '2026-09-16 13:28:12.559058-06', '2026-09-16 13:28:12.559058-06'),
+    (10, 5, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00025', '2026-09-16 13:28:12.559058-06', 5270.00, 632.40, 5902.40, '/invoices/2026/FACT-001-00025.pdf', '2026-09-16 13:28:12.559058-06', '2026-09-16 13:28:12.559058-06'),
+    (11, 6, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00006', '2026-08-22 13:28:12.559058-06', 5050.00, 606.00, 5656.00, '/invoices/2026/FACT-001-00006.pdf', '2026-08-22 13:28:12.559058-06', '2026-08-22 13:28:12.559058-06'),
+    (12, 7, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00007', '2026-08-25 13:28:12.559058-06', 6280.00, 753.60, 7033.60, '/invoices/2026/FACT-001-00007.pdf', '2026-08-25 13:28:12.559058-06', '2026-08-25 13:28:12.559058-06'),
+    (13, 8, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00008', '2026-08-27 13:28:12.559058-06', 2990.00, 358.80, 3348.80, '/invoices/2026/FACT-001-00008.pdf', '2026-08-27 13:28:12.559058-06', '2026-08-27 13:28:12.559058-06'),
+    (14, 9, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00009', '2026-08-30 13:28:12.559058-06', 4640.00, 556.80, 5196.80, '/invoices/2026/FACT-001-00009.pdf', '2026-08-30 13:28:12.559058-06', '2026-08-30 13:28:12.559058-06'),
+    (15, 10, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00010', '2026-09-01 13:28:12.559058-06', 900.00, 108.00, 1008.00, '/invoices/2026/FACT-001-00010.pdf', '2026-09-01 13:28:12.559058-06', '2026-09-01 13:28:12.559058-06'),
+    (16, 11, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00011', '2026-09-02 13:28:12.559058-06', 5480.00, 657.60, 6137.60, '/invoices/2026/FACT-001-00011.pdf', '2026-09-02 13:28:12.559058-06', '2026-09-02 13:28:12.559058-06'),
+    (17, 12, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00012', '2026-09-04 13:28:12.559058-06', 1080.00, 129.60, 1209.60, '/invoices/2026/FACT-001-00012.pdf', '2026-09-04 13:28:12.559058-06', '2026-09-04 13:28:12.559058-06'),
+    (18, 13, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00013', '2026-09-06 13:28:12.559058-06', 4065.00, 487.80, 4552.80, '/invoices/2026/FACT-001-00013.pdf', '2026-09-06 13:28:12.559058-06', '2026-09-06 13:28:12.559058-06'),
+    (19, 14, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00014', '2026-09-07 13:28:12.559058-06', 2340.00, 280.80, 2620.80, '/invoices/2026/FACT-001-00014.pdf', '2026-09-07 13:28:12.559058-06', '2026-09-07 13:28:12.559058-06'),
+    (20, 15, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00015', '2026-09-09 13:28:12.559058-06', 1920.00, 230.40, 2150.40, '/invoices/2026/FACT-001-00015.pdf', '2026-09-09 13:28:12.559058-06', '2026-09-09 13:28:12.559058-06'),
+    (21, 16, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00016', '2026-09-10 13:28:12.559058-06', 1040.00, 124.80, 1164.80, '/invoices/2026/FACT-001-00016.pdf', '2026-09-10 13:28:12.559058-06', '2026-09-10 13:28:12.559058-06'),
+    (22, 17, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00017', '2026-09-11 13:28:12.559058-06', 3880.00, 465.60, 4345.60, '/invoices/2026/FACT-001-00017.pdf', '2026-09-11 13:28:12.559058-06', '2026-09-11 13:28:12.559058-06'),
+    (23, 18, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00018', '2026-09-12 13:28:12.559058-06', 2970.00, 356.40, 3326.40, '/invoices/2026/FACT-001-00018.pdf', '2026-09-12 13:28:12.559058-06', '2026-09-12 13:28:12.559058-06'),
+    (24, 19, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00019', '2026-09-12 13:28:12.559058-06', 8300.00, 996.00, 9296.00, '/invoices/2026/FACT-001-00019.pdf', '2026-09-12 13:28:12.559058-06', '2026-09-12 13:28:12.559058-06'),
+    (25, 20, (SELECT id FROM users WHERE username = 'sales'), 4, 'FACT-001-00020', '2026-09-13 13:28:12.559058-06', 750.00, 90.00, 840.00, '/invoices/2026/FACT-001-00020.pdf', '2026-09-13 13:28:12.559058-06', '2026-09-13 13:28:12.559058-06'),
+    (26, 15, (SELECT id FROM users WHERE username = 'sales'), 2, 'FACT-001-00026', '2026-09-18 06:00:00-06', 360.00, 43.20, 403.20, '/invoices/2026/FACT-001-00026.pdf', '2026-09-17 19:49:56.97499-06', '2026-09-17 19:50:25.721314-06');
 
--- ======================================================================
--- 16. METODOS DE PAGO
--- ======================================================================
-INSERT INTO payment_methods (name, description, is_active, created_at)
-VALUES
-    ('CASH', 'Pago en efectivo en moneda de curso legal (Quetzales)', true, NOW()),
-    ('CREDIT_CARD', 'Pago mediante tarjeta de crédito internacional o local Visa y MasterCard', true, NOW()),
-    ('DEBIT_CARD', 'Pago directo mediante débito bancario autorizado', true, NOW()),
-    ('BANK_TRANSFER', 'Transferencia bancaria directa inmediata vía ACH o banca en línea', true, NOW())
-ON CONFLICT (name) DO NOTHING;
+-- DETALLE DE VENTAS
+INSERT INTO sale_items (id, sale_id, product_id, quantity, unit_price, subtotal, created_at) VALUES
+    (1, 1, 1, 2, 3499.00, 6998.00, '2026-09-05 13:28:12.381631-06'),
+    (2, 1, 5, 1, 780.00, 780.00, '2026-09-05 13:28:12.381631-06'),
+    (3, 2, 3, 1, 2200.00, 2200.00, '2026-09-08 13:28:12.381631-06'),
+    (4, 2, 7, 1, 340.00, 340.00, '2026-09-08 13:28:12.381631-06'),
+    (5, 3, 3, 2, 2200.00, 4400.00, '2026-09-10 13:28:12.381631-06'),
+    (6, 3, 4, 2, 1450.00, 2900.00, '2026-09-10 13:28:12.381631-06'),
+    (7, 3, 6, 4, 290.00, 1160.00, '2026-09-10 13:28:12.381631-06'),
+    (8, 3, 10, 5, 175.00, 875.00, '2026-09-10 13:28:12.381631-06'),
+    (9, 4, 2, 1, 1850.00, 1850.00, '2026-09-13 13:28:12.381631-06'),
+    (10, 4, 8, 1, 480.00, 480.00, '2026-09-13 13:28:12.381631-06'),
+    (11, 5, 5, 3, 780.00, 2340.00, '2026-09-15 13:28:12.381631-06'),
+    (12, 5, 8, 2, 480.00, 960.00, '2026-09-15 13:28:12.381631-06'),
+    (13, 5, 9, 2, 1250.00, 2500.00, '2026-09-15 13:28:12.381631-06'),
+    (14, 5, 7, 4, 340.00, 1360.00, '2026-09-15 13:28:12.381631-06'),
+    (15, 5, 6, 1, 290.00, 290.00, '2026-09-15 13:28:12.381631-06'),
+    (16, 11, 11, 1, 2850.00, 2850.00, '2026-08-22 13:28:12.559058-06'),
+    (17, 11, 3, 1, 2200.00, 2200.00, '2026-08-22 13:28:12.559058-06'),
+    (18, 12, 12, 1, 4500.00, 4500.00, '2026-08-25 13:28:12.559058-06'),
+    (19, 12, 13, 2, 890.00, 1780.00, '2026-08-25 13:28:12.559058-06'),
+    (20, 13, 14, 1, 2650.00, 2650.00, '2026-08-27 13:28:12.559058-06'),
+    (21, 13, 7, 1, 340.00, 340.00, '2026-08-27 13:28:12.559058-06'),
+    (22, 14, 15, 4, 950.00, 3800.00, '2026-08-30 13:28:12.559058-06'),
+    (23, 14, 20, 4, 210.00, 840.00, '2026-08-30 13:28:12.559058-06'),
+    (24, 15, 17, 2, 320.00, 640.00, '2026-09-01 13:28:12.559058-06'),
+    (25, 15, 18, 1, 260.00, 260.00, '2026-09-01 13:28:12.559058-06'),
+    (26, 16, 11, 1, 2850.00, 2850.00, '2026-09-02 13:28:12.559058-06'),
+    (27, 16, 16, 2, 1120.00, 2240.00, '2026-09-02 13:28:12.559058-06'),
+    (28, 16, 19, 1, 390.00, 390.00, '2026-09-02 13:28:12.559058-06'),
+    (29, 17, 21, 1, 520.00, 520.00, '2026-09-04 13:28:12.559058-06'),
+    (30, 17, 22, 2, 280.00, 560.00, '2026-09-04 13:28:12.559058-06'),
+    (31, 18, 24, 1, 1650.00, 1650.00, '2026-09-06 13:28:12.559058-06'),
+    (32, 18, 25, 1, 1980.00, 1980.00, '2026-09-06 13:28:12.559058-06'),
+    (33, 18, 26, 3, 145.00, 435.00, '2026-09-06 13:28:12.559058-06'),
+    (34, 19, 13, 1, 890.00, 890.00, '2026-09-07 13:28:12.559058-06'),
+    (35, 19, 4, 1, 1450.00, 1450.00, '2026-09-07 13:28:12.559058-06'),
+    (36, 20, 27, 3, 220.00, 660.00, '2026-09-09 13:28:12.559058-06'),
+    (37, 20, 28, 3, 180.00, 540.00, '2026-09-09 13:28:12.559058-06'),
+    (38, 20, 29, 2, 360.00, 720.00, '2026-09-09 13:28:12.559058-06'),
+    (39, 21, 23, 1, 750.00, 750.00, '2026-09-10 13:28:12.559058-06'),
+    (40, 21, 6, 1, 290.00, 290.00, '2026-09-10 13:28:12.559058-06'),
+    (41, 22, 24, 2, 1650.00, 3300.00, '2026-09-11 13:28:12.559058-06'),
+    (42, 22, 26, 4, 145.00, 580.00, '2026-09-11 13:28:12.559058-06'),
+    (43, 23, 14, 1, 2650.00, 2650.00, '2026-09-12 13:28:12.559058-06'),
+    (44, 23, 17, 1, 320.00, 320.00, '2026-09-12 13:28:12.559058-06'),
+    (45, 24, 12, 1, 4500.00, 4500.00, '2026-09-12 13:28:12.559058-06'),
+    (46, 24, 15, 4, 950.00, 3800.00, '2026-09-12 13:28:12.559058-06'),
+    (47, 25, 30, 1, 490.00, 490.00, '2026-09-13 13:28:12.559058-06'),
+    (48, 25, 18, 1, 260.00, 260.00, '2026-09-13 13:28:12.559058-06'),
+    (49, 6, 21, 1, 520.00, 520.00, '2026-09-14 13:28:12.559058-06'),
+    (50, 6, 29, 1, 360.00, 360.00, '2026-09-14 13:28:12.559058-06'),
+    (51, 7, 20, 2, 210.00, 420.00, '2026-09-14 13:28:12.559058-06'),
+    (52, 7, 17, 1, 320.00, 320.00, '2026-09-14 13:28:12.559058-06'),
+    (53, 8, 1, 1, 3499.00, 3499.00, '2026-09-15 13:28:12.559058-06'),
+    (54, 8, 5, 2, 780.00, 1560.00, '2026-09-15 13:28:12.559058-06'),
+    (55, 8, 30, 2, 490.00, 980.00, '2026-09-15 13:28:12.559058-06'),
+    (56, 9, 16, 1, 1120.00, 1120.00, '2026-09-16 13:28:12.559058-06'),
+    (57, 9, 22, 1, 280.00, 280.00, '2026-09-16 13:28:12.559058-06'),
+    (58, 10, 11, 1, 2850.00, 2850.00, '2026-09-16 13:28:12.559058-06'),
+    (59, 10, 25, 1, 1980.00, 1980.00, '2026-09-16 13:28:12.559058-06'),
+    (60, 10, 27, 2, 220.00, 440.00, '2026-09-16 13:28:12.559058-06'),
+    (61, 26, 28, 2, 180.00, 360.00, '2026-09-17 19:49:56.987776-06');
 
--- ======================================================================
--- 17. VENTAS
--- ======================================================================
-INSERT INTO sales (customer_id, user_id, status_id, invoice_number, sale_date, subtotal, tax_amount, total_amount, invoice_pdf_path, created_at, updated_at)
-SELECT
-    c.id,
-    u.id,
-    ss.id,
-    s.invoice_number,
-    s.sale_date,
-    s.subtotal,
-    s.tax_amount,
-    s.total_amount,
-    s.invoice_pdf_path,
-    s.sale_date,
-    s.sale_date
-FROM (VALUES
-    (
-        'CF-1002345-1',
-        'sales',
-        'COMPLETADA',
-        'FACT-001-00001',
-        NOW() - INTERVAL '12 days',
-        7778.00::numeric,
-        933.36::numeric,
-        8711.36::numeric,
-        '/invoices/2026/FACT-001-00001.pdf'
-    ),
-    (
-        'CF-2003456-2',
-        'sales',
-        'COMPLETADA',
-        'FACT-001-00002',
-        NOW() - INTERVAL '9 days',
-        2540.00::numeric,
-        304.80::numeric,
-        2844.80::numeric,
-        '/invoices/2026/FACT-001-00002.pdf'
-    ),
-    (
-        'NIT-3456789-3',
-        'sales',
-        'COMPLETADA',
-        'FACT-001-00003',
-        NOW() - INTERVAL '7 days',
-        9335.00::numeric,
-        1120.20::numeric,
-        10455.20::numeric,
-        '/invoices/2026/FACT-001-00003.pdf'
-    ),
-    (
-        'CF-4567890-4',
-        'sales',
-        'COMPLETADA',
-        'FACT-001-00004',
-        NOW() - INTERVAL '4 days',
-        2330.00::numeric,
-        279.60::numeric,
-        2609.60::numeric,
-        '/invoices/2026/FACT-001-00004.pdf'
-    ),
-    (
-        'NIT-5678901-5',
-        'sales',
-        'COMPLETADA',
-        'FACT-001-00005',
-        NOW() - INTERVAL '2 days',
-        7450.00::numeric,
-        894.00::numeric,
-        8344.00::numeric,
-        '/invoices/2026/FACT-001-00005.pdf'
-    )
-) AS s(customer_tax, username, status_name, invoice_number, sale_date, subtotal, tax_amount, total_amount, invoice_pdf_path)
-JOIN customers c ON c.tax_number = s.customer_tax
-JOIN users u ON u.username = s.username
-JOIN sale_statuses ss ON ss.name = s.status_name
-ON CONFLICT (invoice_number) DO NOTHING;
+-- PAGOS DE VENTAS
+INSERT INTO sale_payments (id, sale_id, payment_method_id, amount, payment_date, reference_number, notes, created_at) VALUES
+    (2, 26, 2, 403.20, '2026-09-18 06:00:00-06', NULL, 'Ninguna', '2026-09-17 19:49:56.997768-06');
 
--- ======================================================================
--- 18. DETALLE DE VENTAS
--- ======================================================================
-INSERT INTO sale_items (sale_id, product_id, quantity, unit_price, subtotal, created_at)
-VALUES
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00001'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-001'),
-        2,
-        3499.00,
-        6998.00,
-        NOW() - INTERVAL '12 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00001'),
-        (SELECT id FROM products WHERE sku = 'PROD-ACC-001'),
-        1,
-        780.00,
-        780.00,
-        NOW() - INTERVAL '12 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00002'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-001'),
-        1,
-        2200.00,
-        2200.00,
-        NOW() - INTERVAL '9 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00002'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-002'),
-        1,
-        340.00,
-        340.00,
-        NOW() - INTERVAL '9 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00003'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-001'),
-        2,
-        2200.00,
-        4400.00,
-        NOW() - INTERVAL '7 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00003'),
-        (SELECT id FROM products WHERE sku = 'PROD-SIL-002'),
-        2,
-        1450.00,
-        2900.00,
-        NOW() - INTERVAL '7 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00003'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-001'),
-        4,
-        290.00,
-        1160.00,
-        NOW() - INTERVAL '7 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00003'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-003'),
-        5,
-        175.00,
-        875.00,
-        NOW() - INTERVAL '7 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00004'),
-        (SELECT id FROM products WHERE sku = 'PROD-ESC-002'),
-        1,
-        1850.00,
-        1850.00,
-        NOW() - INTERVAL '4 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00004'),
-        (SELECT id FROM products WHERE sku = 'PROD-ILU-001'),
-        1,
-        480.00,
-        480.00,
-        NOW() - INTERVAL '4 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00005'),
-        (SELECT id FROM products WHERE sku = 'PROD-ACC-001'),
-        3,
-        780.00,
-        2340.00,
-        NOW() - INTERVAL '2 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00005'),
-        (SELECT id FROM products WHERE sku = 'PROD-ILU-001'),
-        2,
-        480.00,
-        960.00,
-        NOW() - INTERVAL '2 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00005'),
-        (SELECT id FROM products WHERE sku = 'PROD-ALM-001'),
-        2,
-        1250.00,
-        2500.00,
-        NOW() - INTERVAL '2 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00005'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-002'),
-        4,
-        340.00,
-        1360.00,
-        NOW() - INTERVAL '2 days'
-    ),
-    (
-        (SELECT id FROM sales WHERE invoice_number = 'FACT-001-00005'),
-        (SELECT id FROM products WHERE sku = 'PROD-SET-001'),
-        1,
-        290.00,
-        290.00,
-        NOW() - INTERVAL '2 days'
-    )
-ON CONFLICT (sale_id, product_id) DO NOTHING;
+-- PRODUCTOS DE PROVEEDORES
+INSERT INTO supplier_products (id, supplier_id, product_id, supplier_sku, cost, last_purchase_cost, created_at, updated_at) VALUES
+    (1, 1, 1, 'SUP1-DESK-01', 2350.00, 2350.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (2, 1, 2, 'SUP1-DESK-02', 1250.00, 1250.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (3, 2, 3, 'SUP2-CHAIR-01', 1450.00, 1450.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (4, 2, 4, 'SUP2-CHAIR-02', 950.00, 950.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (5, 5, 5, 'SUP5-ACC-01', 480.00, 480.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (6, 5, 6, 'SUP5-SET-01', 160.00, 160.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (7, 5, 7, 'SUP5-SET-02', 190.00, 190.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (8, 5, 10, 'SUP5-SET-03', 95.00, 95.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (9, 3, 8, 'SUP3-ILU-01', 280.00, 280.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (10, 4, 9, 'SUP4-ALM-01', 820.00, 820.00, '2026-09-17 13:28:12.381631-06', '2026-09-17 13:28:12.381631-06'),
+    (11, 7, 11, 'PROD-ESC-003', 1900.00, 1900.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (12, 7, 12, 'PROD-ESC-004', 3100.00, 3100.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (13, 7, 13, 'PROD-ESC-005', 580.00, 580.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (14, 2, 14, 'PROD-SIL-003', 1750.00, 1750.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (15, 8, 15, 'PROD-SIL-004', 620.00, 620.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (16, 2, 16, 'PROD-SIL-005', 740.00, 740.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (17, 5, 17, 'PROD-ACC-002', 190.00, 190.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (18, 5, 18, 'PROD-ACC-003', 150.00, 150.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (19, 5, 19, 'PROD-ACC-004', 230.00, 230.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (20, 8, 20, 'PROD-ACC-005', 120.00, 120.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (21, 6, 21, 'PROD-ILU-002', 320.00, 320.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (22, 6, 22, 'PROD-ILU-003', 160.00, 160.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (23, 6, 23, 'PROD-ILU-004', 480.00, 480.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (24, 4, 24, 'PROD-ALM-002', 1080.00, 1080.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (25, 4, 25, 'PROD-ALM-003', 1320.00, 1320.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (26, 4, 26, 'PROD-ALM-004', 85.00, 85.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (27, 3, 27, 'PROD-CAB-001', 130.00, 130.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (28, 3, 28, 'PROD-CAB-002', 105.00, 105.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (29, 3, 29, 'PROD-SET-004', 215.00, 215.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (30, 5, 30, 'PROD-SET-005', 290.00, 290.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (31, 1, 13, 'MUEB-ESC-005', 595.00, 595.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (32, 7, 1, 'MAD-ELEC-001', 2390.00, 2390.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06'),
+    (33, 8, 3, 'CONF-SIL-001', 1490.00, 1490.00, '2026-09-17 13:28:12.559058-06', '2026-09-17 13:28:12.559058-06');
 
--- ======================================================================
--- 19. PAGOS DE VENTAS
--- ======================================================================
-INSERT INTO sale_payments (sale_id, payment_method_id, amount, payment_date, reference_number, notes, created_at)
-SELECT
-    sa.id,
-    pm.id,
-    p.amount,
-    p.payment_date,
-    p.reference_number,
-    p.notes,
-    p.payment_date
-FROM (VALUES
-    ('FACT-001-00001', 'CREDIT_CARD', 8711.36::numeric, NOW() - INTERVAL '12 days', 'AUTH-VISA-984210', 'Pago autorizado con tarjeta de crédito en 6 cuotas'),
-    ('FACT-001-00002', 'DEBIT_CARD', 2844.80::numeric, NOW() - INTERVAL '9 days', 'POS-DEB-553120', 'Pago en punto de venta con tarjeta de débito'),
-    ('FACT-001-00003', 'BANK_TRANSFER', 10455.20::numeric, NOW() - INTERVAL '7 days', 'TRF-BANRURAL-884129', 'Transferencia ACH aprobada y confirmada en cuenta corporativa'),
-    ('FACT-001-00004', 'CASH', 2609.60::numeric, NOW() - INTERVAL '4 days', 'RECIBO-EFE-00412', 'Pago liquidado en caja en efectivo en moneda nacional'),
-    ('FACT-001-00005', 'BANK_TRANSFER', 8344.00::numeric, NOW() - INTERVAL '2 days', 'TRF-BI-3391024', 'Transferencia directa desde Banco Industrial')
-) AS p(invoice_number, payment_method_name, amount, payment_date, reference_number, notes)
-JOIN sales sa ON sa.invoice_number = p.invoice_number
-JOIN payment_methods pm ON pm.name = p.payment_method_name
-WHERE NOT EXISTS (
-    SELECT 1 FROM sale_payments sp
-    WHERE sp.sale_id = sa.id AND sp.payment_method_id = pm.id AND sp.reference_number = p.reference_number
-);
-
-
-
--- ======================================================================
--- 20. SECUENCIAS
--- ======================================================================
-SELECT setval(pg_get_serial_sequence('categories', 'id'), COALESCE(MAX(id), 1)) FROM categories;
-SELECT setval(pg_get_serial_sequence('products', 'id'), COALESCE(MAX(id), 1)) FROM products;
-SELECT setval(pg_get_serial_sequence('phone_numbers', 'id'), COALESCE(MAX(id), 1)) FROM phone_numbers;
-SELECT setval(pg_get_serial_sequence('suppliers', 'id'), COALESCE(MAX(id), 1)) FROM suppliers;
-SELECT setval(pg_get_serial_sequence('phone_suppliers', 'id'), COALESCE(MAX(id), 1)) FROM phone_suppliers;
-SELECT setval(pg_get_serial_sequence('supplier_products', 'id'), COALESCE(MAX(id), 1)) FROM supplier_products;
-SELECT setval(pg_get_serial_sequence('purchase_statuses', 'id'), COALESCE(MAX(id), 1)) FROM purchase_statuses;
-SELECT setval(pg_get_serial_sequence('purchases', 'id'), COALESCE(MAX(id), 1)) FROM purchases;
-SELECT setval(pg_get_serial_sequence('purchase_items', 'id'), COALESCE(MAX(id), 1)) FROM purchase_items;
-SELECT setval(pg_get_serial_sequence('customers', 'id'), COALESCE(MAX(id), 1)) FROM customers;
-SELECT setval(pg_get_serial_sequence('sale_statuses', 'id'), COALESCE(MAX(id), 1)) FROM sale_statuses;
-SELECT setval(pg_get_serial_sequence('payment_methods', 'id'), COALESCE(MAX(id), 1)) FROM payment_methods;
-SELECT setval(pg_get_serial_sequence('sales', 'id'), COALESCE(MAX(id), 1)) FROM sales;
-SELECT setval(pg_get_serial_sequence('sale_items', 'id'), COALESCE(MAX(id), 1)) FROM sale_items;
-SELECT setval(pg_get_serial_sequence('sale_payments', 'id'), COALESCE(MAX(id), 1)) FROM sale_payments;
-SELECT setval(pg_get_serial_sequence('inventory', 'id'), COALESCE(MAX(id), 1)) FROM inventory;
-SELECT setval(pg_get_serial_sequence('inventory_lots', 'id'), COALESCE(MAX(id), 1)) FROM inventory_lots;
-SELECT setval(pg_get_serial_sequence('inventory_movements', 'id'), COALESCE(MAX(id), 1)) FROM inventory_movements;
-SELECT setval(pg_get_serial_sequence('inventory_movement_lots', 'id'), COALESCE(MAX(id), 1)) FROM inventory_movement_lots;
+-- SECUENCIAS
+SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories));
+SELECT setval('customers_id_seq', (SELECT MAX(id) FROM customers));
+SELECT setval('products_id_seq', (SELECT MAX(id) FROM products));
+SELECT setval('inventory_id_seq', (SELECT MAX(id) FROM inventory));
+SELECT setval('purchase_statuses_id_seq', (SELECT MAX(id) FROM purchase_statuses));
+SELECT setval('suppliers_id_seq', (SELECT MAX(id) FROM suppliers));
+SELECT setval('purchases_id_seq', (SELECT MAX(id) FROM purchases));
+SELECT setval('purchase_items_id_seq', (SELECT MAX(id) FROM purchase_items));
+SELECT setval('inventory_lots_id_seq', (SELECT MAX(id) FROM inventory_lots));
+SELECT setval('inventory_movements_id_seq', (SELECT MAX(id) FROM inventory_movements));
+SELECT setval('inventory_movement_lots_id_seq', (SELECT MAX(id) FROM inventory_movement_lots));
+SELECT setval('payment_methods_id_seq', (SELECT MAX(id) FROM payment_methods));
+SELECT setval('phone_numbers_id_seq', (SELECT MAX(id) FROM phone_numbers));
+SELECT setval('phone_suppliers_id_seq', (SELECT MAX(id) FROM phone_suppliers));
+SELECT setval('sale_statuses_id_seq', (SELECT MAX(id) FROM sale_statuses));
+SELECT setval('sales_id_seq', (SELECT MAX(id) FROM sales));
+SELECT setval('sale_items_id_seq', (SELECT MAX(id) FROM sale_items));
+SELECT setval('sale_payments_id_seq', (SELECT MAX(id) FROM sale_payments));
+SELECT setval('supplier_products_id_seq', (SELECT MAX(id) FROM supplier_products));
