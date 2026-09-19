@@ -46,7 +46,6 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Size(max = 20)
     @NotNull
     @ColumnDefault("'UNIT'")
     @Column(name = "unit_of_measure", nullable = false, length = 20)
