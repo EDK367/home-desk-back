@@ -14,6 +14,7 @@ import com.solairy.homedesk.inventory.model.InventoryMovement;
 import com.solairy.homedesk.inventory.repository.InventoryMovementRepository;
 import com.solairy.homedesk.inventory.repository.InventoryRepository;
 import com.solairy.homedesk.inventory.service.InventoryService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,7 @@ public class InventoryServiceImpl implements InventoryService {
     private final InventoryMovementRepository inventoryMovementRepository;
     private final UserRepository userRepository;
     private final InventoryMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -122,6 +124,8 @@ public class InventoryServiceImpl implements InventoryService {
         movement.setNotes(request.notes().trim());
         movement.setCreatedAt(OffsetDateTime.now());
         inventoryMovementRepository.save(movement);
+
+        auditLogService.log(currentUser, "UPDATE", "INVENTARIO", "Inventory", savedInventory.getId().toString(), "Ajuste de inventario para " + product.getName() + ": " + (request.quantity() > 0 ? "+" : "") + request.quantity() + " unidades");
 
         return mapper.toResponse(savedInventory);
     }

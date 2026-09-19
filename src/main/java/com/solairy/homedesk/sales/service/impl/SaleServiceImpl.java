@@ -33,6 +33,7 @@ import com.solairy.homedesk.sales.repository.SaleItemRepository;
 import com.solairy.homedesk.sales.repository.SaleRepository;
 import com.solairy.homedesk.sales.repository.SaleStatusRepository;
 import com.solairy.homedesk.sales.service.SaleService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +67,7 @@ public class SaleServiceImpl implements SaleService {
     private final PaymentMethodRepository paymentMethodRepository;
     private final SalePaymentRepository salePaymentRepository;
     private final SaleMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -254,6 +256,8 @@ public class SaleServiceImpl implements SaleService {
             processInventoryDispatch(savedSale, savedItems, currentUser);
         }
 
+        auditLogService.log(currentUser, "CREATE", "VENTAS", "Sale", savedSale.getId().toString(), "Venta registrada con factura " + savedSale.getInvoiceNumber() + " por monto total Q" + savedSale.getTotalAmount());
+
         return mapper.toResponse(savedSale, savedItems, savedPayments);
     }
 
@@ -277,11 +281,11 @@ public class SaleServiceImpl implements SaleService {
             throw new GlobalException(HttpStatus.CONFLICT, "No se puede cambiar el estado de una venta cancelada");
         }
 
-        List<SaleItem> items = saleItemRepository.findBySaleId(sale.getId());
-        User currentUser = getCurrentUser();
-
         boolean wasDispatched = isDispatchedStatus(currentStatusName);
         boolean willBeDispatched = isDispatchedStatus(newStatusName);
+
+        User currentUser = getCurrentUser();
+        List<SaleItem> items = saleItemRepository.findBySaleId(id);
 
         if (!wasDispatched && willBeDispatched) {
             processInventoryDispatch(sale, items, currentUser);
@@ -292,6 +296,8 @@ public class SaleServiceImpl implements SaleService {
         sale.setStatus(newStatus);
         sale.setUpdatedAt(OffsetDateTime.now());
         Sale saved = repository.save(sale);
+
+        auditLogService.log(currentUser, "UPDATE", "VENTAS", "Sale", saved.getId().toString(), "Estado de venta #" + saved.getId() + " actualizado a " + newStatus.getName());
 
         return toResponse(saved);
     }

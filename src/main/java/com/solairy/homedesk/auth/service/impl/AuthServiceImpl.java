@@ -11,6 +11,7 @@ import com.solairy.homedesk.auth.repository.UserRepository;
 import com.solairy.homedesk.auth.service.AuthService;
 import com.solairy.homedesk.auth.service.JwtService;
 import com.solairy.homedesk.common.exception.GlobalException;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthMapper authMapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional
@@ -64,6 +66,8 @@ public class AuthServiceImpl implements AuthService {
         session.setExpiresAt(now.plusSeconds(jwtService.getRefreshExpirationSeconds()));
         session.setRevokedAt(null);
         sessionRepository.save(session);
+
+        auditLogService.log(user, "LOGIN", "AUTH", "User", user.getId().toString(), "Inicio de sesión exitoso");
 
         UserSummaryResponse userSummary = authMapper.toUserSummaryResponse(user);
 
@@ -139,6 +143,7 @@ public class AuthServiceImpl implements AuthService {
                 if (session.getRevokedAt() == null) {
                     session.setRevokedAt(now);
                     sessionRepository.save(session);
+                    auditLogService.log(session.getUser(), "LOGOUT", "AUTH", "User", session.getUser().getId().toString(), "Cierre de sesión");
                 }
                 return;
             }
@@ -151,6 +156,8 @@ public class AuthServiceImpl implements AuthService {
             }
             if (!activeSessions.isEmpty()) {
                 sessionRepository.saveAll(activeSessions);
+                User user = activeSessions.get(0).getUser();
+                auditLogService.log(user, "LOGOUT", "AUTH", "User", authenticatedUserId.toString(), "Cierre de sesión");
             }
         }
     }

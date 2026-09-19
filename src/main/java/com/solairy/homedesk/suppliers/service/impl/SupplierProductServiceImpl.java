@@ -13,6 +13,7 @@ import com.solairy.homedesk.suppliers.model.SupplierProduct;
 import com.solairy.homedesk.suppliers.repository.SupplierProductRepository;
 import com.solairy.homedesk.suppliers.repository.SupplierRepository;
 import com.solairy.homedesk.suppliers.service.SupplierProductService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +33,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     private final SupplierRepository supplierRepository;
     private final ProductRepository productRepository;
     private final SupplierProductMapper supplierProductMapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -110,6 +112,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         supplierProduct.setUpdatedAt(OffsetDateTime.now());
 
         SupplierProduct saved = repository.save(supplierProduct);
+        auditLogService.log("CREATE", "PROVEEDORES", "SupplierProduct", saved.getId().toString(), "Producto " + product.getName() + " asociado al proveedor " + supplier.getName());
         return supplierProductMapper.toResponse(saved);
     }
 
@@ -124,6 +127,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         supplierProduct.setUpdatedAt(OffsetDateTime.now());
 
         SupplierProduct saved = repository.save(supplierProduct);
+        auditLogService.log("UPDATE", "PROVEEDORES", "SupplierProduct", saved.getId().toString(), "Actualizada relación de proveedor " + saved.getSupplier().getName() + " con producto " + saved.getProduct().getName());
         return supplierProductMapper.toResponse(saved);
     }
 
@@ -133,6 +137,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         SupplierProduct supplierProduct = repository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Relación proveedor-producto no encontrada con id: " + id));
         repository.delete(supplierProduct);
+        auditLogService.log("DELETE", "PROVEEDORES", "SupplierProduct", id.toString(), "Eliminada relación de proveedor " + supplierProduct.getSupplier().getName() + " con producto " + supplierProduct.getProduct().getName());
     }
 
     @Override
@@ -141,5 +146,6 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         SupplierProduct supplierProduct = repository.findBySupplierIdAndProductId(supplierId, productId)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Relación proveedor-producto no encontrada"));
         repository.delete(supplierProduct);
+        auditLogService.log("DELETE", "PROVEEDORES", "SupplierProduct", supplierProduct.getId().toString(), "Eliminada relación de proveedor " + supplierProduct.getSupplier().getName() + " con producto " + supplierProduct.getProduct().getName());
     }
 }

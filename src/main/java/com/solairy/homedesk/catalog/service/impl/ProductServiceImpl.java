@@ -17,6 +17,7 @@ import com.solairy.homedesk.inventory.model.Inventory;
 import com.solairy.homedesk.inventory.model.InventoryMovement;
 import com.solairy.homedesk.inventory.repository.InventoryMovementRepository;
 import com.solairy.homedesk.inventory.repository.InventoryRepository;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
     private final InventoryMovementRepository inventoryMovementRepository;
     private final UserRepository userRepository;
     private final ProductMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -127,6 +129,8 @@ public class ProductServiceImpl implements ProductService {
         inventory.setUpdatedAt(OffsetDateTime.now());
         inventoryRepository.save(inventory);
 
+        auditLogService.log("CREATE", "PRODUCTOS", "Product", savedProduct.getId().toString(), "Producto creado: " + savedProduct.getName() + " (SKU: " + savedProduct.getSku() + ")");
+
         return mapper.toProductResponse(savedProduct, 0);
     }
 
@@ -174,6 +178,8 @@ public class ProductServiceImpl implements ProductService {
 
         product.setUpdatedAt(OffsetDateTime.now());
         Product savedProduct = repository.save(product);
+
+        auditLogService.log("UPDATE", "PRODUCTOS", "Product", savedProduct.getId().toString(), "Producto actualizado: " + savedProduct.getName());
 
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
@@ -266,6 +272,8 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdatedAt(OffsetDateTime.now());
         Product savedProduct = repository.save(product);
 
+        auditLogService.log("UPDATE", "PRODUCTOS", "Product", savedProduct.getId().toString(), "Estado de producto " + savedProduct.getName() + " cambiado a " + (active ? "activo" : "inactivo"));
+
         Integer stock = inventoryRepository.findByProductId(id)
                 .map(Inventory::getQuantityOnHand)
                 .orElse(0);
@@ -319,6 +327,8 @@ public class ProductServiceImpl implements ProductService {
         movement.setCreatedAt(OffsetDateTime.now());
         inventoryMovementRepository.save(movement);
 
+        auditLogService.log(currentUser, "UPDATE", "INVENTARIO", "Product", product.getId().toString(), "Ajuste de inventario para " + product.getName() + ": " + (request.quantity() > 0 ? "+" : "") + request.quantity() + " unidades");
+
         return mapper.toProductResponse(product, newBalance);
     }
 
@@ -335,6 +345,7 @@ public class ProductServiceImpl implements ProductService {
         product.setIsActive(false);
         product.setUpdatedAt(OffsetDateTime.now());
         repository.save(product);
+        auditLogService.log("DELETE", "PRODUCTOS", "Product", product.getId().toString(), "Producto desactivado: " + product.getName());
     }
 
     private PageResponse<ProductResponse> toPageResponse(Page<Product> page) {

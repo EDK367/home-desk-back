@@ -8,6 +8,7 @@ import com.solairy.homedesk.catalog.repository.CategoryRepository;
 import com.solairy.homedesk.catalog.service.CategoryService;
 import com.solairy.homedesk.common.exception.GlobalException;
 import com.solairy.homedesk.common.response.PageResponse;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository repository;
     private final CategoryMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -54,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdatedAt(OffsetDateTime.now());
 
         Category saved = repository.save(category);
+        auditLogService.log("CREATE", "CATEGORIAS", "Category", saved.getId().toString(), "Categoría creada: " + saved.getName());
         return mapper.toCategoryResponse(saved);
     }
 
@@ -77,6 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdatedAt(OffsetDateTime.now());
 
         Category saved = repository.save(category);
+        auditLogService.log("UPDATE", "CATEGORIAS", "Category", saved.getId().toString(), "Categoría actualizada: " + saved.getName());
         return mapper.toCategoryResponse(saved);
     }
 
@@ -93,5 +97,6 @@ public class CategoryServiceImpl implements CategoryService {
         category.setIsActive(false);
         category.setUpdatedAt(OffsetDateTime.now());
         repository.save(category);
+        auditLogService.log("DELETE", "CATEGORIAS", "Category", category.getId().toString(), "Categoría desactivada: " + category.getName());
     }
 }

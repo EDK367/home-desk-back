@@ -9,6 +9,7 @@ import com.solairy.homedesk.auth.model.User;
 import com.solairy.homedesk.auth.repository.RoleRepository;
 import com.solairy.homedesk.auth.repository.UserRepository;
 import com.solairy.homedesk.auth.service.UserService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import com.solairy.homedesk.common.exception.GlobalException;
 import com.solairy.homedesk.common.response.PageResponse;
 import com.solairy.homedesk.enums.RoleName;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserMapper mapper;
     private final PepperPasswordEncoder passwordEncoder;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -79,7 +81,9 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(OffsetDateTime.now());
         user.setUpdatedAt(OffsetDateTime.now());
 
-        return mapper.toUserResponse(repository.save(user));
+        User saved = repository.save(user);
+        auditLogService.log("CREATE", "USUARIOS", "User", saved.getId().toString(), "Usuario creado: " + saved.getUsername());
+        return mapper.toUserResponse(saved);
     }
 
     @Override
@@ -109,11 +113,13 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         user.setUpdatedAt(OffsetDateTime.now());
 
-        if (request.password() != null && !request.password().isBlank()) {
+        if (request.password() != null && !request.password().isBlank() && !request.password().equalsIgnoreCase("notpassword")) {
             user.setPassword(passwordEncoder.encode(request.password()));
         }
 
-        return mapper.toUserResponse(repository.save(user));
+        User saved = repository.save(user);
+        auditLogService.log("UPDATE", "USUARIOS", "User", saved.getId().toString(), "Usuario actualizado: " + saved.getUsername());
+        return mapper.toUserResponse(saved);
     }
 
     @Override
@@ -130,6 +136,7 @@ public class UserServiceImpl implements UserService {
         user.setUpdatedAt(OffsetDateTime.now());
 
         repository.save(user);
+        auditLogService.log("DELETE", "USUARIOS", "User", user.getId().toString(), "Usuario desactivado: " + user.getUsername());
     }
 
     // construccion del username

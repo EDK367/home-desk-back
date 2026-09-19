@@ -8,6 +8,7 @@ import com.solairy.homedesk.payment.mapper.PaymentMethodMapper;
 import com.solairy.homedesk.payment.model.PaymentMethod;
 import com.solairy.homedesk.payment.repository.PaymentMethodRepository;
 import com.solairy.homedesk.payment.service.PaymentMethodService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
 
     private final PaymentMethodRepository paymentMethodRepository;
     private final PaymentMethodMapper paymentMethodMapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -61,6 +63,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
         method.setCreatedAt(OffsetDateTime.now());
 
         PaymentMethod saved = paymentMethodRepository.save(method);
+        auditLogService.log("CREATE", "METODOS_PAGO", "PaymentMethod", saved.getId().toString(), "Método de pago creado: " + saved.getName());
         return paymentMethodMapper.toPaymentMethodResponse(saved);
     }
 
@@ -83,6 +86,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
         method.setDescription(request.description() != null ? request.description().trim() : null);
 
         PaymentMethod saved = paymentMethodRepository.save(method);
+        auditLogService.log("UPDATE", "METODOS_PAGO", "PaymentMethod", saved.getId().toString(), "Método de pago actualizado: " + saved.getName());
         return paymentMethodMapper.toPaymentMethodResponse(saved);
     }
 
@@ -98,5 +102,6 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
 
         method.setIsActive(false);
         paymentMethodRepository.save(method);
+        auditLogService.log("DELETE", "METODOS_PAGO", "PaymentMethod", method.getId().toString(), "Método de pago desactivado: " + method.getName());
     }
 }

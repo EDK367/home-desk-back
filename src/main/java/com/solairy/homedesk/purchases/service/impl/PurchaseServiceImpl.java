@@ -30,6 +30,7 @@ import com.solairy.homedesk.suppliers.model.Supplier;
 import com.solairy.homedesk.suppliers.model.SupplierProduct;
 import com.solairy.homedesk.suppliers.repository.SupplierProductRepository;
 import com.solairy.homedesk.suppliers.repository.SupplierRepository;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,6 +63,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final InventoryMovementLotRepository inventoryMovementLotRepository;
     private final SupplierProductRepository supplierProductRepository;
     private final PurchaseMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -188,6 +190,8 @@ public class PurchaseServiceImpl implements PurchaseService {
             processInventoryReception(savedPurchase, savedItems, currentUser);
         }
 
+        auditLogService.log(currentUser, "CREATE", "COMPRAS", "Purchase", savedPurchase.getId().toString(), "Compra registrada #" + savedPurchase.getId() + " con proveedor " + supplier.getName() + " por monto total Q" + savedPurchase.getTotalAmount());
+
         return mapper.toResponse(savedPurchase, savedItems);
     }
 
@@ -263,6 +267,8 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchase.setStatus(newStatus);
         purchase.setUpdatedAt(OffsetDateTime.now());
         Purchase saved = repository.save(purchase);
+
+        auditLogService.log(currentUser, "UPDATE", "COMPRAS", "Purchase", saved.getId().toString(), "Estado de compra #" + saved.getId() + " actualizado a " + newStatus.getName());
 
         return mapper.toResponse(saved, items);
     }

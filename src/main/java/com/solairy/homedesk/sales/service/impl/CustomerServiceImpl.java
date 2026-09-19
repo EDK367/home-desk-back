@@ -8,6 +8,7 @@ import com.solairy.homedesk.sales.mapper.CustomerMapper;
 import com.solairy.homedesk.sales.model.Customer;
 import com.solairy.homedesk.sales.repository.CustomerRepository;
 import com.solairy.homedesk.sales.service.CustomerService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
     private final CustomerMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -67,6 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setUpdatedAt(OffsetDateTime.now());
 
         Customer saved = repository.save(customer);
+        auditLogService.log("CREATE", "CLIENTES", "Customer", saved.getId().toString(), "Cliente registrado: " + saved.getFullName());
         return mapper.toCustomerResponse(saved);
     }
 
@@ -95,6 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setUpdatedAt(OffsetDateTime.now());
 
         Customer saved = repository.save(customer);
+        auditLogService.log("UPDATE", "CLIENTES", "Customer", saved.getId().toString(), "Cliente actualizado: " + saved.getFullName());
         return mapper.toCustomerResponse(saved);
     }
 
@@ -111,5 +115,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setIsActive(false);
         customer.setUpdatedAt(OffsetDateTime.now());
         repository.save(customer);
+        auditLogService.log("DELETE", "CLIENTES", "Customer", customer.getId().toString(), "Cliente desactivado: " + customer.getFullName());
     }
 }

@@ -12,6 +12,7 @@ import com.solairy.homedesk.payment.repository.SalePaymentRepository;
 import com.solairy.homedesk.payment.service.SalePaymentService;
 import com.solairy.homedesk.sales.model.Sale;
 import com.solairy.homedesk.sales.repository.SaleRepository;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,7 @@ public class SalePaymentServiceImpl implements SalePaymentService {
     private final SaleRepository saleRepository;
     private final PaymentMethodRepository paymentMethodRepository;
     private final SalePaymentMapper salePaymentMapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -97,6 +99,7 @@ public class SalePaymentServiceImpl implements SalePaymentService {
         payment.setCreatedAt(OffsetDateTime.now());
 
         SalePayment saved = salePaymentRepository.save(payment);
+        auditLogService.log("CREATE", "PAGOS", "SalePayment", saved.getId().toString(), "Pago registrado por monto de Q" + saved.getAmount() + " para la venta #" + sale.getId());
         return salePaymentMapper.toResponse(saved);
     }
 
@@ -106,5 +109,6 @@ public class SalePaymentServiceImpl implements SalePaymentService {
         SalePayment payment = salePaymentRepository.findById(id)
                 .orElseThrow(() -> new GlobalException(HttpStatus.NOT_FOUND, "Pago no encontrado con id: " + id));
         salePaymentRepository.delete(payment);
+        auditLogService.log("DELETE", "PAGOS", "SalePayment", id.toString(), "Pago eliminado por monto de Q" + payment.getAmount() + " de la venta #" + payment.getSale().getId());
     }
 }

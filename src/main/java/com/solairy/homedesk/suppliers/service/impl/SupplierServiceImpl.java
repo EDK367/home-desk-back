@@ -12,6 +12,7 @@ import com.solairy.homedesk.suppliers.repository.PhoneNumberRepository;
 import com.solairy.homedesk.suppliers.repository.PhoneSupplierRepository;
 import com.solairy.homedesk.suppliers.repository.SupplierRepository;
 import com.solairy.homedesk.suppliers.service.SupplierService;
+import com.solairy.homedesk.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ public class SupplierServiceImpl implements SupplierService {
     private final PhoneNumberRepository phoneNumberRepository;
     private final PhoneSupplierRepository phoneSupplierRepository;
     private final SupplierMapper mapper;
+    private final AuditLogService auditLogService;
 
     @Override
     @Transactional(readOnly = true)
@@ -72,6 +74,8 @@ public class SupplierServiceImpl implements SupplierService {
         Supplier saved = repository.save(supplier);
         associatePhones(saved, request);
 
+        auditLogService.log("CREATE", "PROVEEDORES", "Supplier", saved.getId().toString(), "Proveedor registrado: " + saved.getName());
+
         return toResponse(saved);
     }
 
@@ -96,7 +100,10 @@ public class SupplierServiceImpl implements SupplierService {
         phoneSupplierRepository.deleteBySupplier(supplier);
         associatePhones(supplier, request);
 
-        return toResponse(repository.save(supplier));
+        Supplier saved = repository.save(supplier);
+        auditLogService.log("UPDATE", "PROVEEDORES", "Supplier", saved.getId().toString(), "Proveedor actualizado: " + saved.getName());
+
+        return toResponse(saved);
     }
 
     @Override
@@ -110,6 +117,7 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setIsActive(false);
         supplier.setUpdatedAt(OffsetDateTime.now());
         repository.save(supplier);
+        auditLogService.log("DELETE", "PROVEEDORES", "Supplier", supplier.getId().toString(), "Proveedor desactivado: " + supplier.getName());
     }
 
 
