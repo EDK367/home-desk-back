@@ -15,7 +15,7 @@ import java.util.List;
 @Configuration
 public class CorsOriginConfig {
 
-    @Value("${home-desk.cors.allowed-origins:http://localhost:4200,http://localhost:3000,http://localhost:5173}")
+    @Value("${home-desk.cors.allowed-origins:http://localhost:4200,http://localhost:3000,https://homedesk.solairy.app}")
     private List<String> allowedOrigins;
 
     @Bean
@@ -24,8 +24,7 @@ public class CorsOriginConfig {
 
         List<String> patterns = new ArrayList<>(List.of(
                 "http://localhost:[*]",
-                "http://127.0.0.1:[*]",
-                "https://localhost:[*]"
+                "https://homedesk.solairy.app"
         ));
         if (allowedOrigins != null) {
             for (String origin : allowedOrigins) {
